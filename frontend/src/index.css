@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Editorial event palette ───────────────────────────────
+   Cream canvas, deep indigo ink, warm amber accent.
+   Headlines: Fraunces (serif) · Body: Inter (sans).          */
+:root {
+  --background: 40 36% 96%;
+  --foreground: 255 28% 11%;
+  --card: 40 33% 100%;
+  --card-foreground: 255 28% 11%;
+  --muted: 39 26% 90%;
+  --muted-foreground: 30 14% 38%;
+  --border: 38 22% 84%;
+  --input: 38 22% 84%;
+  --primary: 255 44% 24%;
+  --primary-foreground: 45 50% 97%;
+  --accent: 36 92% 50%;
+  --accent-foreground: 30 60% 18%;
+  --success: 152 46% 32%;
+  --success-foreground: 40 33% 99%;
+  --destructive: 6 74% 50%;
+  --destructive-foreground: 40 33% 99%;
+  color-scheme: light;
+}
+
+.dark {
+  --background: 255 28% 8%;
+  --foreground: 40 30% 93%;
+  --card: 255 26% 11%;
+  --card-foreground: 40 30% 93%;
+  --muted: 255 20% 16%;
+  --muted-foreground: 35 18% 64%;
+  --border: 255 18% 20%;
+  --input: 255 18% 20%;
+  --primary: 250 70% 72%;
+  --primary-foreground: 255 40% 12%;
+  --accent: 42 95% 55%;
+  --accent-foreground: 25 50% 16%;
+  --success: 152 55% 48%;
+  --success-foreground: 255 28% 8%;
+  --destructive: 6 70% 55%;
+  --destructive-foreground: 40 33% 99%;
+  color-scheme: dark;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "cv02", "cv03";
+  }
+  h1, h2, h3, .font-display {
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+  }
+  ::selection {
+    background: hsl(var(--accent) / 0.35);
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground;
+  }
+  .h-display {
+    @apply font-display text-4xl font-semibold leading-[1.05] tracking-tight md:text-5xl;
+  }
+  .card-rule {
+    @apply h-px bg-border;
+  }
+}
