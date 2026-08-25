@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
 import { SegmentedControl } from "@/components/ui/segmented";
+import { Modal } from "@/components/ui/modal";
 import { EmptyState, ErrorBox, Spinner } from "@/components/States";
 import { cn, formatDate, minutesToTime } from "@/lib/utils";
 
@@ -35,6 +36,7 @@ export default function Schedule() {
   const [loading, setLoading] = useState(true);
   const [day, setDay] = useState<string>("");
   const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState<Interview | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -209,16 +211,18 @@ export default function Schedule() {
                         )}
                       >
                         {isStart && iv && (
-                          <div
+                          <button
+                            type="button"
+                            onClick={() => setSelected(iv)}
                             className={cn(
-                              "h-full rounded border px-1.5 py-1 text-[10px] leading-tight",
+                              "h-full w-full rounded border px-1.5 py-1 text-left text-[10px] leading-tight transition-shadow hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
                               tierColor(tierByCompany.get(iv.company_id)),
                             )}
                             title={`${iv.student_name} · ${iv.company_name} · ${iv.panel_id ?? ""}`}
                           >
                             <div className="truncate font-semibold">{iv.student_name}</div>
                             <div className="truncate opacity-75">{iv.company_name}</div>
-                          </div>
+                          </button>
                         )}
                       </div>
                     );
@@ -277,6 +281,66 @@ export default function Schedule() {
           </CardContent>
         </Card>
       </div>
+
+      {/* ── Appointment modal ──────────────────────────────── */}
+      <Modal
+        open={!!selected}
+        onClose={() => setSelected(null)}
+        title={selected ? `${selected.student_name} · ${formatDate(selected.date)}` : ""}
+      >
+        {selected && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Badge variant="info">{selected.company_name}</Badge>
+              <Badge
+                variant={
+                  tierByCompany.get(selected.company_id) === "TIER_1"
+                    ? "info"
+                    : tierByCompany.get(selected.company_id) === "TIER_2"
+                      ? "warning"
+                      : "default"
+                }
+              >
+                {tierByCompany.get(selected.company_id) ?? "Tier"}
+              </Badge>
+              <Badge variant="success">{selected.status}</Badge>
+            </div>
+
+            <dl className="grid grid-cols-2 gap-x-6 gap-y-4 text-sm">
+              <Detail label="Appointment" value={selected.id} mono />
+              <Detail label="Date" value={formatDate(selected.date)} />
+              <Detail label="Time" value={`${selected.start_time ?? "—"} – ${selected.end_time ?? "—"}`} />
+              <Detail label="Duration" value={`${selected.duration_minutes} min`} />
+              <Detail label="Room" value={selected.room_id ?? "—"} />
+              <Detail label="Panel" value={selected.panel_id ?? "—"} />
+            </dl>
+
+            <div className="flex items-center justify-between gap-3 border-t border-border pt-4">
+              <span className="text-xs text-muted-foreground">Tap outside or press Esc to close</span>
+              <Button size="sm" variant="outline" onClick={() => setSelected(null)}>
+                Close
+              </Button>
+            </div>
+          </div>
+        )}
+      </Modal>
+    </div>
+  );
+}
+
+function Detail({
+  label,
+  value,
+  mono,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+}) {
+  return (
+    <div>
+      <dt className="text-xs text-muted-foreground">{label}</dt>
+      <dd className={cn("mt-0.5 font-medium", mono && "font-mono text-xs")}>{value}</dd>
     </div>
   );
 }
