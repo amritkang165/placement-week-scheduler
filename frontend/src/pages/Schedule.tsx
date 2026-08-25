@@ -5,6 +5,7 @@ import type { Company, Interview, Room, ScheduleResponse, ScheduleVersion } from
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input, Select } from "@/components/ui/input";
 import { EmptyState, ErrorBox, Spinner } from "@/components/States";
 import { cn, formatDate, minutesToTime } from "@/lib/utils";
 
@@ -130,16 +131,16 @@ export default function Schedule() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <input
+          <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search student or company..."
-            className="h-9 w-64 rounded-md border border-border bg-card px-3 text-sm outline-none focus:border-primary"
+            placeholder="Search student or company…"
+            className="w-64"
           />
-          <select
+          <Select
             value={schedule.version.id}
             onChange={(e) => setParams({ v: e.target.value })}
-            className="h-9 rounded-md border border-border bg-card px-2 text-sm"
+            className="w-64"
           >
             {[...versions].reverse().map((v) => (
               <option key={v.id} value={v.id}>
@@ -147,7 +148,7 @@ export default function Schedule() {
                 {v.is_active ? " (active)" : ""}
               </option>
             ))}
-          </select>
+          </Select>
         </div>
       </div>
 
@@ -167,14 +168,14 @@ export default function Schedule() {
       <Card className="overflow-hidden">
         <CardContent className="overflow-x-auto p-0">
           <div style={{ minWidth: 180 * Math.min(gridCols, 8) }}>
-            {/* Header row */}
+            {/* Header row (sticky) */}
             <div
-              className="grid border-b bg-muted text-xs font-semibold text-foreground"
-              style={{ gridTemplateColumns: `90px repeat(${gridCols}, minmax(110px, 1fr))` }}
+              className="grid border-b border-border bg-muted/60 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground"
+              style={{ gridTemplateColumns: `76px repeat(${gridCols}, minmax(110px, 1fr))` }}
             >
-              <div className="px-2 py-2">Time</div>
+              <div className="px-2 py-2.5">Time</div>
               {rooms.map((r) => (
-                <div key={r.id} className="border-l px-2 py-2 text-center">
+                <div key={r.id} className="border-l border-border px-2 py-2.5 text-center">
                   {r.name}
                   {r.status !== "ACTIVE" && (
                     <Badge variant="destructive" className="ml-1">
@@ -185,43 +186,52 @@ export default function Schedule() {
               ))}
             </div>
             {/* Time rows */}
-            {slots.map((startMin) => (
-              <div
-                key={startMin}
-                className="grid border-b last:border-0"
-                style={{ gridTemplateColumns: `90px repeat(${gridCols}, minmax(110px, 1fr))` }}
-              >
-                <div className="px-2 py-1.5 text-[11px] tabular-nums text-muted-foreground">
-                  {minutesToTime(startMin)}
+            {slots.map((startMin, idx) => {
+              const isHour = startMin % 60 === 0;
+              return (
+                <div
+                  key={startMin}
+                  className="grid border-b border-border last:border-0"
+                  style={{ gridTemplateColumns: `76px repeat(${gridCols}, minmax(110px, 1fr))` }}
+                >
+                  <div
+                    className={cn(
+                      "border-r border-border px-2 py-1.5 text-[11px] tabular-nums text-muted-foreground",
+                      isHour && "font-semibold text-foreground",
+                      idx % 2 === 1 && "bg-muted/20",
+                    )}
+                  >
+                    {minutesToTime(startMin)}
+                  </div>
+                  {rooms.map((r) => {
+                    const iv = interviewAt(r.id, startMin);
+                    const isStart = iv && iv.start_time === minutesToTime(startMin);
+                    return (
+                      <div
+                        key={r.id}
+                        className={cn(
+                          "min-h-[36px] border-l border-border p-0.5 transition-colors hover:bg-muted/40",
+                          idx % 2 === 1 && "bg-muted/20",
+                        )}
+                      >
+                        {isStart && iv && (
+                          <div
+                            className={cn(
+                              "h-full rounded border px-1.5 py-1 text-[10px] leading-tight",
+                              tierColor(tierByCompany.get(iv.company_id)),
+                            )}
+                            title={`${iv.student_name} · ${iv.company_name} · ${iv.panel_id ?? ""}`}
+                          >
+                            <div className="truncate font-semibold">{iv.student_name}</div>
+                            <div className="truncate opacity-75">{iv.company_name}</div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
-                {rooms.map((r) => {
-                  const iv = interviewAt(r.id, startMin);
-                  const isStart = iv && iv.start_time === minutesToTime(startMin);
-                  return (
-                    <div
-                      key={r.id}
-                      className={cn(
-                        "min-h-[34px] border-l p-0.5",
-                        !iv && "bg-card",
-                      )}
-                    >
-                      {isStart && iv && (
-                        <div
-                          className={cn(
-                            "rounded border px-1.5 py-1 text-[10px] leading-tight",
-                            tierColor(tierByCompany.get(iv.company_id)),
-                          )}
-                          title={`${iv.student_name} · ${iv.company_name} · ${iv.panel_id ?? ""}`}
-                        >
-                          <div className="truncate font-semibold">{iv.student_name}</div>
-                          <div className="truncate opacity-75">{iv.company_name}</div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </CardContent>
       </Card>

@@ -3,6 +3,8 @@ import { api } from "@/lib/api";
 import type { Company, Panel, Room, Student } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input, Select } from "@/components/ui/input";
+import { Table, THead, TH, TR, TD } from "@/components/ui/table";
 import { ErrorBox, Spinner } from "@/components/States";
 import { cn } from "@/lib/utils";
 
@@ -68,11 +70,11 @@ export default function Entities() {
             Companies, students, rooms, and panels in the current dataset
           </p>
         </div>
-        <input
+        <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search..."
-          className="h-9 w-64 rounded-md border px-3 text-sm outline-none focus:border-blue-400"
+          placeholder="Search…"
+          className="w-64"
         />
       </div>
 
@@ -95,25 +97,25 @@ export default function Entities() {
         <Card>
           <CardHeader className="flex-row items-center justify-between">
             <CardTitle>Companies ({companies.length})</CardTitle>
-            <select value={tier} onChange={(e) => setTier(e.target.value)} className="h-8 rounded-md border px-2 text-xs">
+            <Select value={tier} onChange={(e) => setTier(e.target.value)} className="w-32">
               <option value="ALL">All tiers</option>
               <option value="TIER_1">Tier 1</option>
               <option value="TIER_2">Tier 2</option>
               <option value="TIER_3">Tier 3</option>
-            </select>
+            </Select>
           </CardHeader>
           <CardContent className="max-h-[60vh] overflow-y-auto p-0">
-            <table className="w-full text-sm">
-              <thead className="sticky top-0 bg-card">
-                <tr className="border-b text-left text-xs uppercase tracking-wide text-muted-foreground">
-                  <th className="px-4 py-2">Company</th>
-                  <th className="px-4 py-2">Tier</th>
-                  <th className="px-4 py-2">CGPA cut</th>
-                  <th className="px-4 py-2">Duration</th>
-                  <th className="px-4 py-2">Panels</th>
-                  <th className="px-4 py-2">Availability</th>
+            <Table>
+              <THead>
+                <tr>
+                  <TH>Company</TH>
+                  <TH>Tier</TH>
+                  <TH className="text-right">CGPA cut</TH>
+                  <TH className="text-right">Duration</TH>
+                  <TH className="text-right">Panels</TH>
+                  <TH>Availability</TH>
                 </tr>
-              </thead>
+              </THead>
               <tbody>
                 {companies
                   .filter(
@@ -122,17 +124,17 @@ export default function Entities() {
                       c.name.toLowerCase().includes(search.toLowerCase()),
                   )
                   .map((c) => (
-                    <tr key={c.id} className="border-b last:border-0 hover:bg-muted">
-                      <td className="px-4 py-2 font-medium">{c.name}</td>
-                      <td className="px-4 py-2">{tierBadge(c.priority_tier)}</td>
-                      <td className="px-4 py-2">{c.cgpa_cutoff}</td>
-                      <td className="px-4 py-2">{c.interview_duration_minutes} min</td>
-                      <td className="px-4 py-2">{c.panel_count}</td>
-                      <td className="px-4 py-2 text-xs text-muted-foreground">{c.available_days.join(", ")}</td>
-                    </tr>
+                    <TR key={c.id}>
+                      <TD className="font-medium">{c.name}</TD>
+                      <TD>{tierBadge(c.priority_tier)}</TD>
+                      <TD className="text-right tabular-nums">{c.cgpa_cutoff}</TD>
+                      <TD className="text-right tabular-nums">{c.interview_duration_minutes} min</TD>
+                      <TD className="text-right tabular-nums">{c.panel_count}</TD>
+                      <TD className="text-xs text-muted-foreground">{c.available_days.join(", ")}</TD>
+                    </TR>
                   ))}
               </tbody>
-            </table>
+            </Table>
           </CardContent>
         </Card>
       )}
@@ -143,32 +145,32 @@ export default function Entities() {
             <CardTitle>Students ({students.length})</CardTitle>
           </CardHeader>
           <CardContent className="max-h-[60vh] overflow-y-auto p-0">
-            <table className="w-full text-sm">
-              <thead className="sticky top-0 bg-card">
-                <tr className="border-b text-left text-xs uppercase tracking-wide text-muted-foreground">
-                  <th className="px-4 py-2">Name</th>
-                  <th className="px-4 py-2">Branch</th>
-                  <th className="px-4 py-2">Year</th>
-                  <th className="px-4 py-2">CGPA</th>
-                  <th className="px-4 py-2">Status</th>
+            <Table>
+              <THead>
+                <tr>
+                  <TH>Name</TH>
+                  <TH>Branch</TH>
+                  <TH className="text-right">Year</TH>
+                  <TH className="text-right">CGPA</TH>
+                  <TH>Status</TH>
                 </tr>
-              </thead>
+              </THead>
               <tbody>
                 {students
                   .filter((s) => s.name.toLowerCase().includes(search.toLowerCase()))
                   .map((s) => (
-                    <tr key={s.id} className="border-b last:border-0 hover:bg-muted">
-                      <td className="px-4 py-2 font-medium">{s.name}</td>
-                      <td className="px-4 py-2">{s.branch}</td>
-                      <td className="px-4 py-2">{s.year}</td>
-                      <td className="px-4 py-2">{s.cgpa}</td>
-                      <td className="px-4 py-2">
+                    <TR key={s.id}>
+                      <TD className="font-medium">{s.name}</TD>
+                      <TD>{s.branch}</TD>
+                      <TD className="text-right tabular-nums">{s.year}</TD>
+                      <TD className="text-right tabular-nums">{s.cgpa}</TD>
+                      <TD>
                         <Badge variant={s.status === "ACTIVE" ? "success" : "warning"}>{s.status}</Badge>
-                      </td>
-                    </tr>
+                      </TD>
+                    </TR>
                   ))}
               </tbody>
-            </table>
+            </Table>
           </CardContent>
         </Card>
       )}
@@ -179,28 +181,28 @@ export default function Entities() {
             <CardTitle>Rooms ({rooms.length})</CardTitle>
           </CardHeader>
           <CardContent className="max-h-[60vh] overflow-y-auto p-0">
-            <table className="w-full text-sm">
-              <thead className="sticky top-0 bg-card">
-                <tr className="border-b text-left text-xs uppercase tracking-wide text-muted-foreground">
-                  <th className="px-4 py-2">Room</th>
-                  <th className="px-4 py-2">Capacity</th>
-                  <th className="px-4 py-2">Status</th>
+            <Table>
+              <THead>
+                <tr>
+                  <TH>Room</TH>
+                  <TH className="text-right">Capacity</TH>
+                  <TH>Status</TH>
                 </tr>
-              </thead>
+              </THead>
               <tbody>
                 {rooms
                   .filter((r) => r.name.toLowerCase().includes(search.toLowerCase()))
                   .map((r) => (
-                    <tr key={r.id} className="border-b last:border-0 hover:bg-muted">
-                      <td className="px-4 py-2 font-medium">{r.name}</td>
-                      <td className="px-4 py-2">{r.capacity}</td>
-                      <td className="px-4 py-2">
+                    <TR key={r.id}>
+                      <TD className="font-medium">{r.name}</TD>
+                      <TD className="text-right tabular-nums">{r.capacity}</TD>
+                      <TD>
                         <Badge variant={r.status === "ACTIVE" ? "success" : "destructive"}>{r.status}</Badge>
-                      </td>
-                    </tr>
+                      </TD>
+                    </TR>
                   ))}
               </tbody>
-            </table>
+            </Table>
           </CardContent>
         </Card>
       )}
@@ -211,30 +213,30 @@ export default function Entities() {
             <CardTitle>Panels ({panels.length})</CardTitle>
           </CardHeader>
           <CardContent className="max-h-[60vh] overflow-y-auto p-0">
-            <table className="w-full text-sm">
-              <thead className="sticky top-0 bg-card">
-                <tr className="border-b text-left text-xs uppercase tracking-wide text-muted-foreground">
-                  <th className="px-4 py-2">Panel</th>
-                  <th className="px-4 py-2">Company</th>
-                  <th className="px-4 py-2">Status</th>
+            <Table>
+              <THead>
+                <tr>
+                  <TH>Panel</TH>
+                  <TH>Company</TH>
+                  <TH>Status</TH>
                 </tr>
-              </thead>
+              </THead>
               <tbody>
                 {panels.map((p) => {
                   const company = companies.find((c) => c.id === p.company_id);
                   if (search && !company?.name.toLowerCase().includes(search.toLowerCase())) return null;
                   return (
-                    <tr key={p.id} className="border-b last:border-0 hover:bg-muted">
-                      <td className="px-4 py-2 font-medium">{p.name}</td>
-                      <td className="px-4 py-2">{company?.name ?? p.company_id}</td>
-                      <td className="px-4 py-2">
+                    <TR key={p.id}>
+                      <TD className="font-medium">{p.name}</TD>
+                      <TD>{company?.name ?? p.company_id}</TD>
+                      <TD>
                         <Badge variant={p.status === "ACTIVE" ? "success" : "destructive"}>{p.status}</Badge>
-                      </td>
-                    </tr>
+                      </TD>
+                    </TR>
                   );
                 })}
               </tbody>
-            </table>
+            </Table>
           </CardContent>
         </Card>
       )}

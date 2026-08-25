@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { StatCard } from "@/components/StatCard";
 import { EmptyState, ErrorBox, Spinner } from "@/components/States";
 import ConflictsWidget from "@/components/ConflictsWidget";
+import { Table, THead, TH, TR, TD } from "@/components/ui/table";
 import { pct } from "@/lib/utils";
 
 const TIER_COLORS: Record<string, string> = {
@@ -209,43 +210,41 @@ export default function Dashboard() {
           </Link>
         </CardHeader>
         <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b text-left text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-                  <th className="px-5 py-2.5 font-semibold">Version</th>
-                  <th className="px-5 py-2.5 font-semibold">Reason</th>
-                  <th className="px-5 py-2.5 font-semibold">Scheduled</th>
-                  <th className="px-5 py-2.5 font-semibold">Cancelled</th>
-                  <th className="px-5 py-2.5 font-semibold">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[...versions].reverse().slice(0, 6).map((v) => (
-                  <tr key={v.id} className="border-b last:border-0 hover:bg-muted/50">
-                    <td className="px-5 py-3 font-medium">
-                      <Link to={`/schedule?v=${v.id}`} className="text-primary hover:underline">
-                        SCH-{String(v.version_number).padStart(3, "0")}
-                      </Link>
-                      {v.is_active && (
-                        <Badge variant="success" className="ml-2">
-                          active
-                        </Badge>
-                      )}
-                    </td>
-                    <td className="px-5 py-3 text-muted-foreground">{v.reason}</td>
-                    <td className="px-5 py-3">{v.scheduled_count}</td>
-                    <td className="px-5 py-3">{v.cancelled_count}</td>
-                    <td className="px-5 py-3">
-                      <Badge variant={v.solver_status === "OPTIMAL" ? "success" : "info"}>
-                        {v.solver_status}
+          <Table>
+            <THead>
+              <tr>
+                <TH>Version</TH>
+                <TH>Reason</TH>
+                <TH className="text-right">Scheduled</TH>
+                <TH className="text-right">Cancelled</TH>
+                <TH>Status</TH>
+              </tr>
+            </THead>
+            <tbody>
+              {[...versions].reverse().slice(0, 6).map((v) => (
+                <TR key={v.id}>
+                  <TD className="font-medium">
+                    <Link to={`/schedule?v=${v.id}`} className="text-primary hover:underline">
+                      SCH-{String(v.version_number).padStart(3, "0")}
+                    </Link>
+                    {v.is_active && (
+                      <Badge variant="success" className="ml-2">
+                        active
                       </Badge>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                    )}
+                  </TD>
+                  <TD className="text-muted-foreground">{v.reason}</TD>
+                  <TD className="text-right tabular-nums">{v.scheduled_count}</TD>
+                  <TD className="text-right tabular-nums">{v.cancelled_count}</TD>
+                  <TD>
+                    <Badge variant={v.solver_status === "OPTIMAL" ? "success" : "info"}>
+                      {v.solver_status}
+                    </Badge>
+                  </TD>
+                </TR>
+              ))}
+            </tbody>
+          </Table>
         </CardContent>
       </Card>
     </div>

@@ -14,6 +14,8 @@ import type {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Field, Input, Select } from "@/components/ui/input";
+import { Table, THead, TH, TR, TD } from "@/components/ui/table";
 import { EmptyState, ErrorBox, Spinner } from "@/components/States";
 import { formatDate, minutesToTime } from "@/lib/utils";
 
@@ -128,31 +130,27 @@ export default function Replan() {
         <CardHeader>
           <CardTitle>Inject disruption</CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-3 md:grid-cols-5">
-          <label className="text-xs font-medium text-foreground">
-            Type
-            <select
+        <CardContent className="grid gap-4 md:grid-cols-5">
+          <Field label="Type">
+            <Select
               value={type}
               onChange={(e) => {
                 setType(e.target.value as DisruptionType);
                 setEntityId("");
               }}
-              className="mt-1 h-9 w-full rounded-md border bg-card px-2 text-sm"
             >
               {DISRUPTION_TYPES.map((t) => (
                 <option key={t.value} value={t.value}>
                   {t.label}
                 </option>
               ))}
-            </select>
-          </label>
+            </Select>
+          </Field>
 
-          <label className="text-xs font-medium text-foreground md:col-span-2">
-            Entity
-            <select
+          <Field label="Entity" className="md:col-span-2">
+            <Select
               value={entityId}
               onChange={(e) => setEntityId(e.target.value)}
-              className="mt-1 h-9 w-full rounded-md border bg-card px-2 text-sm"
             >
               <option value="">Select {activeType.entity}...</option>
               {entities.map((e) => (
@@ -160,31 +158,27 @@ export default function Replan() {
                   {e.label}
                 </option>
               ))}
-            </select>
-          </label>
+            </Select>
+          </Field>
 
           {type === "COMPANY_DELAY" && (
-            <label className="text-xs font-medium text-foreground">
-              Delay (hours)
-              <input
+            <Field label="Delay (hours)">
+              <Input
                 type="number"
                 min={1}
                 max={8}
                 value={delayHours}
                 onChange={(e) => setDelayHours(Number(e.target.value))}
-                className="mt-1 h-9 w-full rounded-md border px-2 text-sm"
               />
-            </label>
+            </Field>
           )}
 
-          <label className="text-xs font-medium text-foreground">
-            Reason
-            <input
+          <Field label="Reason">
+            <Input
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              className="mt-1 h-9 w-full rounded-md border px-2 text-sm"
             />
-          </label>
+          </Field>
 
           <div className="flex items-end">
             <Button onClick={submit} disabled={!entityId || busy} className="w-full">
@@ -244,32 +238,30 @@ export default function Replan() {
               </div>
             </CardHeader>
             <CardContent className="max-h-[480px] overflow-y-auto p-0">
-              <table className="w-full text-xs">
-                <thead className="sticky top-0 bg-card">
-                  <tr className="border-b text-left uppercase tracking-wide text-muted-foreground">
-                    <th className="px-3 py-2">Interview</th>
-                    <th className="px-3 py-2">Student</th>
-                    <th className="px-3 py-2">Company</th>
-                    <th className="px-3 py-2">Change</th>
-                    <th className="px-3 py-2">Before</th>
-                    <th className="px-3 py-2">After</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {changes.map((c) => (
-                    <tr key={c.interview_id} className="border-b last:border-0 hover:bg-muted">
-                      <td className="px-3 py-1.5 font-mono">{c.interview_id}</td>
-                      <td className="px-3 py-1.5">{c.student_name}</td>
-                      <td className="px-3 py-1.5">{c.company_name}</td>
-                      <td className="px-3 py-1.5">
-                        <Badge variant={CHANGE_VARIANTS[c.change_type]}>{c.change_type}</Badge>
-                      </td>
-                      <td className="px-3 py-1.5 text-muted-foreground">{slotText(c.before)}</td>
-                      <td className="px-3 py-1.5">{slotText(c.after)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <THead>
+                <tr>
+                  <TH>Interview</TH>
+                  <TH>Student</TH>
+                  <TH>Company</TH>
+                  <TH>Change</TH>
+                  <TH>Before</TH>
+                  <TH>After</TH>
+                </tr>
+              </THead>
+              <tbody>
+                {changes.map((c) => (
+                  <TR key={c.interview_id}>
+                    <TD className="font-mono text-xs">{c.interview_id}</TD>
+                    <TD>{c.student_name}</TD>
+                    <TD>{c.company_name}</TD>
+                    <TD>
+                      <Badge variant={CHANGE_VARIANTS[c.change_type]}>{c.change_type}</Badge>
+                    </TD>
+                    <TD className="text-muted-foreground">{slotText(c.before)}</TD>
+                    <TD>{slotText(c.after)}</TD>
+                  </TR>
+                ))}
+              </tbody>
             </CardContent>
           </Card>
         </>

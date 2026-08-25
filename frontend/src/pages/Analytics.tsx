@@ -12,6 +12,7 @@ import {
 import { api } from "@/lib/api";
 import type { Company, Interview, Metrics } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, THead, TH, TR, TD } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState, ErrorBox, Spinner } from "@/components/States";
 import { StatCard } from "@/components/StatCard";
@@ -152,30 +153,30 @@ export default function Analytics() {
           <CardTitle>Company detail</CardTitle>
         </CardHeader>
         <CardContent className="max-h-96 overflow-y-auto p-0">
-          <table className="w-full text-sm">
-            <thead className="sticky top-0 bg-card">
-              <tr className="border-b text-left text-xs uppercase tracking-wide text-muted-foreground">
-                <th className="px-4 py-2">Company</th>
-                <th className="px-4 py-2">Tier</th>
-                <th className="px-4 py-2">Scheduled</th>
-                <th className="px-4 py-2">Cancelled</th>
-                <th className="px-4 py-2">Unscheduled</th>
+          <Table>
+            <THead>
+              <tr>
+                <TH>Company</TH>
+                <TH>Tier</TH>
+                <TH className="text-right">Scheduled</TH>
+                <TH className="text-right">Cancelled</TH>
+                <TH className="text-right">Unscheduled</TH>
               </tr>
-            </thead>
+            </THead>
             <tbody>
               {perCompany.map((c) => (
-                <tr key={c.name} className="border-b last:border-0 hover:bg-muted">
-                  <td className="px-4 py-2 font-medium">{c.name}</td>
-                  <td className="px-4 py-2">
+                <TR key={c.name}>
+                  <TD className="font-medium">{c.name}</TD>
+                  <TD>
                     <Badge variant={c.tier === "TIER_1" ? "info" : "default"}>{c.tier || "—"}</Badge>
-                  </td>
-                  <td className="px-4 py-2">{c.scheduled}</td>
-                  <td className="px-4 py-2">{c.cancelled}</td>
-                  <td className="px-4 py-2">{c.unscheduled}</td>
-                </tr>
+                  </TD>
+                  <TD className="text-right tabular-nums">{c.scheduled}</TD>
+                  <TD className="text-right tabular-nums">{c.cancelled}</TD>
+                  <TD className="text-right tabular-nums">{c.unscheduled}</TD>
+                </TR>
               ))}
             </tbody>
-          </table>
+          </Table>
         </CardContent>
       </Card>
     </div>

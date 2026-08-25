@@ -13,6 +13,7 @@ import { dataApi } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Field, Input, Select, Textarea } from "@/components/ui/input";
 import { ErrorBox, Spinner } from "@/components/States";
 
 type EntityKind = "company" | "student" | "room" | "panel" | "shortlist";
@@ -203,16 +204,14 @@ export default function AddData() {
 
               <div className="grid gap-3 md:grid-cols-2">
                 {FIELDS[entity].map((f) => (
-                  <label key={f.key} className="text-xs font-medium text-foreground">
-                    {f.label}
-                    <input
+                  <Field key={f.key} label={f.label}>
+                    <Input
                       type={f.type ?? "text"}
                       value={form[f.key] ?? ""}
                       onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
                       placeholder={f.key === "available_days" ? DAY_OPTIONS.join(",") : ""}
-                      className="mt-1 h-9 w-full rounded-md border px-2 text-sm"
                     />
-                  </label>
+                  </Field>
                 ))}
               </div>
 
@@ -229,7 +228,7 @@ export default function AddData() {
               <CardTitle>Import JSON</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <textarea
+              <Textarea
                 value={jsonText}
                 onChange={(e) => setJsonText(e.target.value)}
                 rows={12}
@@ -240,7 +239,7 @@ export default function AddData() {
   "panels": [{"company_id":"COMP-01","name":"P1"}],
   "shortlists": [{"student_id":"STU-0001","company_id":"COMP-01"}]
 }`}
-                className="w-full rounded-md border p-3 font-mono text-xs"
+                className="font-mono text-xs"
               />
               <Button onClick={submitJson} disabled={busy}>
                 {busy ? "Importing..." : "Import JSON"}
@@ -258,17 +257,17 @@ export default function AddData() {
               <div className="flex flex-wrap items-center gap-3">
                 <label className="text-xs font-medium text-foreground">
                   Entity type
-                  <select
+                  <Select
                     value={csvEntity}
                     onChange={(e) => setCsvEntity(e.target.value as EntityKind)}
-                    className="ml-2 h-9 rounded-md border px-2 text-sm"
+                    className="ml-2 w-40"
                   >
                     <option value="companies">companies</option>
                     <option value="students">students</option>
                     <option value="rooms">rooms</option>
                     <option value="panels">panels</option>
                     <option value="shortlists">shortlists</option>
-                  </select>
+                  </Select>
                 </label>
                 <input
                   ref={fileRef}

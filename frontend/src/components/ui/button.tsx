@@ -29,7 +29,7 @@ export function Button({
   asChild?: boolean;
 }) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-50",
+    "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:pointer-events-none disabled:opacity-50",
     VARIANTS[variant],
     SIZES[size],
     className,
