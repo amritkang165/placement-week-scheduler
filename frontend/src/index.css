@@ -2,71 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Editorial event palette ───────────────────────────────
-   Cream canvas, deep indigo ink, warm amber accent.
-   Headlines: Fraunces (serif) · Body: Inter (sans).          */
+/* ── Neo-brutalist palette ─────────────────────────────────
+   Flat color blocks, thick black borders, hard offset shadows.
+   Headline: Archivo Black · Body: Space Grotesk · Numbers: Space Mono. */
 :root {
-  --background: 40 36% 96%;
-  --foreground: 255 28% 11%;
-  --card: 40 33% 100%;
-  --card-foreground: 255 28% 11%;
-  --muted: 39 26% 90%;
-  --muted-foreground: 30 14% 38%;
-  --border: 38 22% 84%;
-  --input: 38 22% 84%;
-  --primary: 255 44% 24%;
-  --primary-foreground: 45 50% 97%;
-  --accent: 36 92% 50%;
-  --accent-foreground: 30 60% 18%;
-  --success: 152 46% 32%;
-  --success-foreground: 40 33% 99%;
-  --destructive: 6 74% 50%;
-  --destructive-foreground: 40 33% 99%;
+  --background: 45 30% 96%;           /* cream paper */
+  --foreground: 0 0% 7%;              /* near-black ink */
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 7%;
+  --muted: 45 25% 90%;
+  --muted-foreground: 0 0% 30%;
+  --border: 0 0% 7%;                 /* ink borders */
+  --input: 0 0% 100%;
+  --primary: 224 78% 52%;            /* electric blue */
+  --primary-foreground: 0 0% 100%;
+  --accent: 51 100% 55%;            /* signal yellow */
+  --accent-foreground: 0 0% 7%;
+  --success: 145 70% 42%;
+  --success-foreground: 0 0% 100%;
+  --destructive: 4 90% 56%;
+  --destructive-foreground: 0 0% 100%;
+  --hard-shadow: 5px 5px 0 0 #0b0b0b;
   color-scheme: light;
 }
 
 .dark {
-  --background: 255 28% 8%;
-  --foreground: 40 30% 93%;
-  --card: 255 26% 11%;
-  --card-foreground: 40 30% 93%;
-  --muted: 255 20% 16%;
-  --muted-foreground: 35 18% 64%;
-  --border: 255 18% 20%;
-  --input: 255 18% 20%;
-  --primary: 250 70% 72%;
-  --primary-foreground: 255 40% 12%;
-  --accent: 42 95% 55%;
-  --accent-foreground: 25 50% 16%;
-  --success: 152 55% 48%;
-  --success-foreground: 255 28% 8%;
-  --destructive: 6 70% 55%;
-  --destructive-foreground: 40 33% 99%;
+  --background: 0 0% 6%;
+  --foreground: 45 30% 94%;
+  --card: 0 0% 10%;
+  --card-foreground: 45 30% 94%;
+  --muted: 0 0% 16%;
+  --muted-foreground: 45 20% 66%;
+  --border: 45 30% 94%;             /* light borders on dark */
+  --input: 0 0% 10%;
+  --primary: 224 80% 60%;
+  --primary-foreground: 0 0% 6%;
+  --accent: 51 100% 58%;
+  --accent-foreground: 0 0% 6%;
+  --success: 145 60% 55%;
+  --success-foreground: 0 0% 6%;
+  --destructive: 4 85% 62%;
+  --destructive-foreground: 0 0% 6%;
+  --hard-shadow: 5px 5px 0 0 #e8e4d6;
   color-scheme: dark;
 }
 
 @layer base {
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-    font-feature-settings: "cv02", "cv03";
+    font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   }
   h1, h2, h3, .font-display {
-    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-family: "Archivo Black", ui-sans-serif, sans-serif;
+    letter-spacing: -0.02em;
   }
   ::selection {
-    background: hsl(var(--accent) / 0.35);
+    background: hsl(var(--accent));
+    color: #000;
   }
 }
 
 @layer components {
   .eyebrow {
-    @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground;
+    @apply font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground;
   }
   .h-display {
-    @apply font-display text-4xl font-semibold leading-[1.05] tracking-tight md:text-5xl;
+    @apply font-display text-4xl font-normal leading-[0.95] tracking-tight md:text-6xl;
   }
-  .card-rule {
-    @apply h-px bg-border;
+  .mono {
+    @apply font-mono tabular-nums;
+  }
+  .mark {
+    @apply relative inline-block;
+  }
+  .mark::after {
+    content: "";
+    @apply absolute -bottom-1 left-0 h-2 w-full bg-accent;
   }
 }

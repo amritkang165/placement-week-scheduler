@@ -25,9 +25,9 @@ import { Table, THead, TH, TR, TD } from "@/components/ui/table";
 import { pct } from "@/lib/utils";
 
 const TIER_COLORS: Record<string, string> = {
-  TIER_1: "#3730a3",
-  TIER_2: "#b45309",
-  TIER_3: "#a8a29e",
+  TIER_1: "#2f5bea",
+  TIER_2: "#eab308",
+  TIER_3: "#8b8b8b",
 };
 
 export default function Dashboard() {
@@ -83,9 +83,9 @@ export default function Dashboard() {
   if (!hasData) {
     return (
       <div className="space-y-6">
-        <div className="rounded-lg border border-border bg-card p-10 text-center md:p-16">
-          <p className="eyebrow mb-3">Coordinators’ board</p>
-          <h2 className="h-display mx-auto max-w-2xl">Set the stage for placement week.</h2>
+        <div className="border-2 border-foreground bg-card p-10 text-center shadow-hard md:p-16">
+          <p className="eyebrow mb-4">Coordinators’ board</p>
+          <h2 className="h-display mx-auto max-w-2xl uppercase">Set the stage for placement week.</h2>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
             Generate a deterministic dataset and solve the initial schedule to
             bring the board to life.
@@ -103,21 +103,19 @@ export default function Dashboard() {
       {/* ── Hero ───────────────────────────────────────────── */}
       <section className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
         <div>
-          <p className="eyebrow mb-3">Placement week · Coordinators’ board</p>
-          <h1 className="h-display">
-            {metrics.scheduled}{" "}
-            <span className="text-muted-foreground">of</span> {metrics.total}{" "}
-            <span className="block text-2xl font-normal italic text-muted-foreground md:text-3xl">
-              interviews now on the board.
-            </span>
+          <p className="eyebrow mb-4">Placement week · Coordinators’ board</p>
+          <h1 className="h-display uppercase">
+            <span className="mark">{metrics.scheduled} of {metrics.total}</span>{" "}
+            <span className="text-primary">interviews</span> live
           </h1>
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            {pct(metrics.coverage)} scheduled · {metrics.unscheduled} unresolved.{" "}
+          <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground">
+            <span className="mono font-bold text-foreground">{pct(metrics.coverage)}</span> scheduled ·{" "}
+            <span className="mono font-bold text-foreground">{metrics.unscheduled}</span> unresolved.{" "}
             {metrics.student_clashes === 0
               ? "No student clashes — every appointment runs clean."
               : `${metrics.student_clashes} clashes need attention.`}
           </p>
-          <div className="mt-6 flex flex-wrap gap-2">
+          <div className="mt-7 flex flex-wrap gap-3">
             <Button asChild>
               <Link to="/schedule">
                 Open schedule <ArrowRight className="h-4 w-4" />
@@ -133,7 +131,7 @@ export default function Dashboard() {
           <StatCard label="Coverage" value={pct(metrics.coverage)} sub={`${metrics.scheduled} scheduled`} />
           <StatCard label="Unscheduled" value={metrics.unscheduled} sub="no feasible slot yet" />
           <StatCard label="Replan churn" value={pct(metrics.replan_churn)} sub="moved + cancelled share" />
-          <StatCard label="On the floor" value={metrics.companies} sub={`${metrics.rooms} rooms · ${metrics.panels} panels`} accent={false} />
+          <StatCard label="On the floor" value={metrics.companies} sub={`${metrics.rooms} rooms · ${metrics.panels} panels`} accent="green" />
         </div>
       </section>
 
@@ -164,11 +162,11 @@ export default function Dashboard() {
           <CardContent>
             <ResponsiveContainer width="100%" height={240}>
               <BarChart data={dayData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#a1a1aa" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#0b0b0b" />
                 <XAxis dataKey="day" fontSize={12} tickLine={false} axisLine={{ stroke: "#a1a1aa" }} />
                 <YAxis fontSize={12} allowDecimals={false} tickLine={false} axisLine={false} />
                 <Tooltip contentStyle={{ borderRadius: 8, borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }} />
-                <Bar dataKey="interviews" fill="#4f46e5" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="interviews" fill="#2f5bea" radius={[0, 0, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>

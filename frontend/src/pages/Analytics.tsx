@@ -121,8 +121,8 @@ export default function Analytics() {
                 />
                 <Tooltip />
                 <Legend />
-                <Bar yAxisId="left" dataKey="interviews" name="Interviews" fill="#4f46e5" radius={[4, 4, 0, 0]} />
-                <Bar yAxisId="right" dataKey="utilization" name="Util %" fill="#f59e0b" radius={[4, 4, 0, 0]} />
+                <Bar yAxisId="left" dataKey="interviews" name="Interviews" fill="#2f5bea" radius={[0, 0, 0, 0]} />
+                <Bar yAxisId="right" dataKey="utilization" name="Util %" fill="#eab308" radius={[0, 0, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -140,8 +140,8 @@ export default function Analytics() {
                 <YAxis type="category" dataKey="name" fontSize={11} width={130} />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="scheduled" name="Scheduled" stackId="a" fill="#4f46e5" />
-                <Bar dataKey="cancelled" name="Cancelled" stackId="a" fill="#ef4444" />
+                <Bar dataKey="scheduled" name="Scheduled" stackId="a" fill="#2f5bea" />
+                <Bar dataKey="cancelled" name="Cancelled" stackId="a" fill="#e11d48" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
