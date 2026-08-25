@@ -5,16 +5,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: [
-          "-apple-system",
-          "BlinkMacSystemFont",
-          '"SF Pro Text"',
-          '"Inter"',
-          '"Segoe UI"',
-          "ui-sans-serif",
-          "system-ui",
-          "sans-serif",
-        ],
+        sans: ['"Inter"', "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ['"Fraunces"', "ui-serif", "Georgia", "serif"],
+        mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -29,16 +22,8 @@ export default {
         card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
       },
       borderColor: { DEFAULT: "hsl(var(--border))" },
-      borderRadius: {
-        lg: "0.75rem",
-        md: "0.5rem",
-        sm: "0.375rem",
-        xl: "1rem",
-      },
-      boxShadow: {
-        mac: "0 1px 2px rgb(0 0 0 / 0.05), 0 4px 16px -4px rgb(0 0 0 / 0.08)",
-        float: "0 8px 30px -6px rgb(0 0 0 / 0.16)",
-      },
+      borderRadius: { lg: "0", md: "0", sm: "0", xl: "0" },
+      boxShadow: { none: "none" },
     },
   },
   plugins: [],

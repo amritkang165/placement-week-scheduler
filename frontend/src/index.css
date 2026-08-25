@@ -2,72 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── macOS-informed palette ───────────────────────────────
-   Neutral grouped background, frosted translucent cards,
-   system font (SF Pro on macOS), Apple blue accent.         */
+/* ── Editorial minimal ───────────────────────────────────
+   Warm paper, ink, one saffron accent. Serif display,
+   Inter body, IBM Plex Mono labels. Hairlines, no shadows. */
 :root {
-  --background: 240 7% 96%;
-  --foreground: 240 6% 10%;
-  --card: 0 0% 100%;
-  --card-foreground: 240 6% 10%;
-  --muted: 240 6% 93%;
-  --muted-foreground: 240 4% 46%;
-  --border: 240 6% 87%;
-  --input: 240 6% 90%;
-  --primary: 211 100% 50%;
-  --primary-foreground: 0 0% 100%;
-  --accent: 211 100% 50%;
-  --accent-foreground: 0 0% 100%;
-  --success: 140 60% 42%;
-  --success-foreground: 0 0% 100%;
-  --destructive: 4 88% 56%;
-  --destructive-foreground: 0 0% 100%;
+  --background: 42 33% 97%;
+  --foreground: 240 7% 8%;
+  --card: 42 33% 99%;
+  --card-foreground: 240 7% 8%;
+  --muted: 42 24% 94%;
+  --muted-foreground: 38 12% 42%;
+  --border: 40 18% 86%;
+  --input: 40 18% 84%;
+  --primary: 240 7% 8%;
+  --primary-foreground: 42 33% 98%;
+  --accent: 30 94% 48%;
+  --accent-foreground: 30 60% 14%;
+  --success: 150 50% 34%;
+  --success-foreground: 42 33% 98%;
+  --destructive: 5 66% 50%;
+  --destructive-foreground: 42 33% 98%;
   color-scheme: light;
 }
 
 .dark {
-  --background: 240 6% 8%;
-  --foreground: 240 12% 96%;
-  --card: 240 6% 12%;
-  --card-foreground: 240 12% 96%;
-  --muted: 240 6% 17%;
-  --muted-foreground: 240 5% 62%;
-  --border: 240 6% 21%;
-  --input: 240 6% 21%;
-  --primary: 211 100% 62%;
-  --primary-foreground: 240 8% 10%;
-  --accent: 211 100% 62%;
-  --accent-foreground: 240 8% 10%;
-  --success: 140 50% 54%;
-  --success-foreground: 240 8% 10%;
-  --destructive: 4 88% 62%;
-  --destructive-foreground: 240 8% 10%;
+  --background: 235 12% 6%;
+  --foreground: 42 33% 96%;
+  --card: 235 11% 9%;
+  --card-foreground: 42 33% 96%;
+  --muted: 235 10% 14%;
+  --muted-foreground: 40 12% 60%;
+  --border: 235 10% 19%;
+  --input: 235 10% 19%;
+  --primary: 42 33% 96%;
+  --primary-foreground: 235 12% 6%;
+  --accent: 32 98% 54%;
+  --accent-foreground: 30 60% 12%;
+  --success: 150 45% 52%;
+  --success-foreground: 235 12% 6%;
+  --destructive: 6 78% 60%;
+  --destructive-foreground: 235 12% 6%;
   color-scheme: dark;
 }
 
 @layer base {
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter",
-      "Segoe UI", ui-sans-serif, system-ui, sans-serif;
-    font-feature-settings: "cv02", "cv03", "cv04";
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "cv02", "cv03";
   }
   ::selection {
-    background: hsl(var(--primary) / 0.2);
+    background: hsl(var(--accent) / 0.28);
   }
 }
 
 @layer components {
   .eyebrow {
-    @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground;
+    @apply font-mono text-[10px] font-medium uppercase tracking-[0.28em] text-muted-foreground;
+  }
+  .display {
+    @apply font-display font-medium leading-[1.02] tracking-[-0.02em];
   }
   .large-title {
-    @apply text-2xl font-bold tracking-tight md:text-3xl;
-  }
-  .frosted {
-    @apply bg-card/70 backdrop-blur-xl;
+    @apply display text-3xl md:text-4xl;
   }
   .hairline {
-    @apply border-border;
+    border-color: hsl(var(--border));
+  }
+  .label-mono {
+    @apply font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground;
   }
 }

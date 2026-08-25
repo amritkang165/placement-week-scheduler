@@ -2,14 +2,14 @@ import { cn } from "@/lib/utils";
 import type { InputHTMLAttributes, LabelHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
 
 const base =
-  "h-9 w-full rounded-md border border-input bg-card px-3 text-sm text-foreground placeholder:text-muted-foreground shadow-sm transition-shadow focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25 disabled:opacity-60";
+  "h-9 w-full rounded-none border-b border-input bg-transparent px-0 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-foreground focus:outline-none disabled:opacity-60";
 
 export function Input({ className, ...props }: InputHTMLAttributes<HTMLInputElement>) {
   return <input className={cn(base, className)} {...props} />;
 }
 
 export function Select({ className, ...props }: SelectHTMLAttributes<HTMLSelectElement>) {
-  return <select className={cn(base, "pr-8", className)} {...props} />;
+  return <select className={cn(base, "pr-6", className)} {...props} />;
 }
 
 export function Textarea({ className, ...props }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
@@ -17,12 +17,7 @@ export function Textarea({ className, ...props }: TextareaHTMLAttributes<HTMLTex
 }
 
 export function Label({ className, ...props }: LabelHTMLAttributes<HTMLLabelElement>) {
-  return (
-    <label
-      className={cn("mb-1 block text-xs font-medium text-muted-foreground", className)}
-      {...props}
-    />
-  );
+  return <label className={cn("mb-2 block label-mono", className)} {...props} />;
 }
 
 export function Field({
