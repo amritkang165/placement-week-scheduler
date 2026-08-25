@@ -24,3 +24,4 @@ dist/
 
 # Docker
 *.pid
+tsconfig.tsbuildinfo
