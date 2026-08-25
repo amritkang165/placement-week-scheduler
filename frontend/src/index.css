@@ -2,71 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Calm, professional palette ────────────────────────────
-   Neutral surfaces, one restrained brand color, thin borders,
-   soft shadows, readable type. Inter throughout.            */
+/* ── macOS-informed palette ───────────────────────────────
+   Neutral grouped background, frosted translucent cards,
+   system font (SF Pro on macOS), Apple blue accent.         */
 :root {
-  --background: 210 40% 98%;          /* slate-50 */
-  --foreground: 222 47% 11%;          /* slate-900 */
+  --background: 240 7% 96%;
+  --foreground: 240 6% 10%;
   --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --muted: 210 40% 96%;               /* slate-100 */
-  --muted-foreground: 215 16% 47%;    /* slate-500 */
-  --border: 214 32% 91%;              /* slate-200 */
-  --input: 214 32% 91%;
-  --primary: 243 75% 59%;             /* indigo-600 */
+  --card-foreground: 240 6% 10%;
+  --muted: 240 6% 93%;
+  --muted-foreground: 240 4% 46%;
+  --border: 240 6% 87%;
+  --input: 240 6% 90%;
+  --primary: 211 100% 50%;
   --primary-foreground: 0 0% 100%;
-  --accent: 199 89% 48%;              /* sky-500 (subtle) */
+  --accent: 211 100% 50%;
   --accent-foreground: 0 0% 100%;
-  --success: 160 84% 39%;
+  --success: 140 60% 42%;
   --success-foreground: 0 0% 100%;
-  --destructive: 0 72% 51%;
+  --destructive: 4 88% 56%;
   --destructive-foreground: 0 0% 100%;
   color-scheme: light;
 }
 
 .dark {
-  --background: 222 47% 8%;           /* slate-950 */
-  --foreground: 210 40% 98%;
-  --card: 222 47% 11%;                /* slate-900 */
-  --card-foreground: 210 40% 98%;
-  --muted: 217 33% 17%;
-  --muted-foreground: 215 20% 65%;
-  --border: 217 33% 20%;
-  --input: 217 33% 20%;
-  --primary: 239 84% 67%;
-  --primary-foreground: 222 47% 11%;
-  --accent: 199 89% 60%;
-  --accent-foreground: 222 47% 11%;
-  --success: 158 64% 52%;
-  --success-foreground: 222 47% 11%;
-  --destructive: 0 72% 62%;
-  --destructive-foreground: 222 47% 11%;
+  --background: 240 6% 8%;
+  --foreground: 240 12% 96%;
+  --card: 240 6% 12%;
+  --card-foreground: 240 12% 96%;
+  --muted: 240 6% 17%;
+  --muted-foreground: 240 5% 62%;
+  --border: 240 6% 21%;
+  --input: 240 6% 21%;
+  --primary: 211 100% 62%;
+  --primary-foreground: 240 8% 10%;
+  --accent: 211 100% 62%;
+  --accent-foreground: 240 8% 10%;
+  --success: 140 50% 54%;
+  --success-foreground: 240 8% 10%;
+  --destructive: 4 88% 62%;
+  --destructive-foreground: 240 8% 10%;
   color-scheme: dark;
 }
 
 @layer base {
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter",
+      "Segoe UI", ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04";
   }
   ::selection {
-    background: hsl(var(--primary) / 0.18);
+    background: hsl(var(--primary) / 0.2);
   }
 }
 
 @layer components {
   .eyebrow {
-    @apply text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground;
+    @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground;
   }
-  .h-display {
-    @apply text-3xl font-bold leading-[1.1] tracking-tighter md:text-5xl;
+  .large-title {
+    @apply text-2xl font-bold tracking-tight md:text-3xl;
   }
-  .mono {
-    @apply tabular-nums;
+  .frosted {
+    @apply bg-card/70 backdrop-blur-xl;
   }
-  .card-title {
-    @apply text-base font-semibold leading-tight tracking-tight;
+  .hairline {
+    @apply border-border;
   }
 }

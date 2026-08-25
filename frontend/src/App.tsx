@@ -3,6 +3,7 @@ import {
   Bell,
   CalendarDays,
   Database,
+  LayoutDashboard,
   LineChart,
   Moon,
   Sun,
@@ -18,87 +19,118 @@ import AddData from "./pages/AddData";
 import { cn } from "./lib/utils";
 import { useTheme } from "./lib/theme";
 
-const NAV = [
-  { to: "/", label: "Board", icon: LineChart },
-  { to: "/schedule", label: "Schedule", icon: CalendarDays },
-  { to: "/replan", label: "Disruptions", icon: Zap },
-  { to: "/analytics", label: "Analytics", icon: LineChart },
-  { to: "/entities", label: "Entities", icon: Users },
-  { to: "/add-data", label: "Add Data", icon: Database },
+const GROUPS: { label: string; items: { to: string; label: string; icon: any; end?: boolean }[] }[] = [
+  {
+    label: "Overview",
+    items: [
+      { to: "/", label: "Board", icon: LayoutDashboard, end: true },
+      { to: "/schedule", label: "Schedule", icon: CalendarDays },
+    ],
+  },
+  {
+    label: "Operate",
+    items: [
+      { to: "/replan", label: "Disruptions", icon: Zap },
+      { to: "/analytics", label: "Analytics", icon: LineChart },
+    ],
+  },
+  {
+    label: "Data",
+    items: [
+      { to: "/entities", label: "Entities", icon: Users },
+      { to: "/add-data", label: "Add Data", icon: Database },
+    ],
+  },
 ];
+
+function TrafficLights() {
+  return (
+    <div className="flex items-center gap-2">
+      {["#ff5f57", "#febc2e", "#28c840"].map((c) => (
+        <span key={c} className="h-3 w-3 rounded-full" style={{ background: c }} />
+      ))}
+    </div>
+  );
+}
 
 export default function App() {
   const { theme, toggle } = useTheme();
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* ── Top bar ─────────────────────────────────────────── */}
-      <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-          <div className="flex items-center gap-3">
-            <span className="flex h-8 items-center rounded-md bg-primary px-2.5 text-sm font-bold text-primary-foreground">
-              PW
-            </span>
-            <div className="leading-tight">
-              <p className="text-[15px] font-semibold tracking-tight">Placement Week</p>
-              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
-                Coordinators’ board
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={toggle}
-              aria-label="Toggle theme"
-              className="flex h-8 w-8 items-center justify-center rounded-md border border-border text-foreground hover:bg-muted"
-            >
-              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
-            <button
-              aria-label="Notifications"
-              className="relative flex h-8 w-8 items-center justify-center rounded-md border border-border text-foreground hover:bg-muted"
-            >
-              <Bell className="h-4 w-4" />
-              <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-destructive" />
-            </button>
-          </div>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
+      {/* ── Window toolbar ───────────────────────────────────── */}
+      <header className="frosted sticky top-0 z-30 flex h-12 items-center justify-between border-b border-border px-4">
+        <div className="w-40">
+          <TrafficLights />
         </div>
-        {/* nav */}
-        <nav className="mx-auto max-w-6xl overflow-x-auto px-5">
-          <div className="flex gap-1">
-            {NAV.map(({ to, label, icon: Icon }) => (
-              <NavLink
-                key={to}
-                to={to}
-                end={to === "/"}
-                className={({ isActive }) =>
-                  cn(
-                    "flex items-center gap-2 whitespace-nowrap border-b-2 px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
-                    isActive ? "border-primary text-foreground" : "border-transparent",
-                  )
-                }
-              >
-                <Icon className="h-4 w-4" />
-                {label}
-              </NavLink>
-            ))}
-          </div>
-        </nav>
+        <div className="text-sm font-medium text-muted-foreground">Placement Week</div>
+        <div className="flex w-40 items-center justify-end gap-1.5">
+          <button
+            onClick={toggle}
+            aria-label="Toggle theme"
+            className="flex h-7 w-7 items-center justify-center rounded-md text-foreground hover:bg-muted"
+          >
+            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+          <button
+            aria-label="Notifications"
+            className="relative flex h-7 w-7 items-center justify-center rounded-md text-foreground hover:bg-muted"
+          >
+            <Bell className="h-4 w-4" />
+            <span className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-destructive" />
+          </button>
+        </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-5 py-8 md:py-10">
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/schedule" element={<Schedule />} />
-          <Route path="/replan" element={<Replan />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/entities" element={<Entities />} />
-          <Route path="/add-data" element={<AddData />} />
-        </Routes>
-      </main>
+      <div className="flex flex-1">
+        {/* ── Sidebar ────────────────────────────────────────── */}
+        <aside className="frosted sticky top-12 h-[calc(100vh-3rem)] w-60 shrink-0 border-r border-border px-3 py-4">
+          <nav className="flex flex-col gap-5">
+            {GROUPS.map((g) => (
+              <div key={g.label}>
+                <p className="mb-1 px-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  {g.label}
+                </p>
+                <div className="flex flex-col gap-0.5">
+                  {g.items.map(({ to, label, icon: Icon, end }) => (
+                    <NavLink
+                      key={to}
+                      to={to}
+                      end={end}
+                      className={({ isActive }) =>
+                        cn(
+                          "flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-[13px] font-medium text-foreground transition-colors",
+                          isActive
+                            ? "bg-primary/10 text-primary"
+                            : "text-foreground hover:bg-muted",
+                        )
+                      }
+                    >
+                      <Icon className="h-4 w-4 opacity-80" />
+                      {label}
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </nav>
+          <div className="absolute inset-x-3 bottom-4 rounded-lg border border-border bg-muted/60 px-3 py-2.5 text-[11px] leading-relaxed text-muted-foreground">
+            <p className="font-medium text-foreground">CP-SAT engine</p>
+            <p>FastAPI · React</p>
+          </div>
+        </aside>
 
-      <footer className="mx-auto max-w-6xl px-5 pb-10 text-xs text-muted-foreground">
-        CP-SAT · FastAPI · React
-      </footer>
+        {/* ── Content ────────────────────────────────────────── */}
+        <main className="flex-1 overflow-x-hidden px-6 py-6 md:px-8">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/schedule" element={<Schedule />} />
+            <Route path="/replan" element={<Replan />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/entities" element={<Entities />} />
+            <Route path="/add-data" element={<AddData />} />
+          </Routes>
+        </main>
+      </div>
     </div>
   );
 }

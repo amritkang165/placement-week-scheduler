@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
+import { SegmentedControl } from "@/components/ui/segmented";
 import { EmptyState, ErrorBox, Spinner } from "@/components/States";
 import { cn, formatDate, minutesToTime } from "@/lib/utils";
 
@@ -121,7 +122,7 @@ export default function Schedule() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="eyebrow mb-2">Week at a glance</p>
-          <h2 className="font-display text-3xl font-semibold tracking-tight">Schedule</h2>
+          <h2 className="large-title">Schedule</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Version SCH-{String(schedule.version.version_number).padStart(3, "0")} ·{" "}
             {schedule.version.reason} ·{" "}
@@ -152,18 +153,11 @@ export default function Schedule() {
         </div>
       </div>
 
-      <div className="flex gap-1">
-        {days.map((d) => (
-          <Button
-            key={d}
-            size="sm"
-            variant={d === day ? "primary" : "outline"}
-            onClick={() => setDay(d)}
-          >
-            {formatDate(d)}
-          </Button>
-        ))}
-      </div>
+      <SegmentedControl
+        value={day}
+        onChange={setDay}
+        options={days.map((d) => ({ value: d, label: formatDate(d) }))}
+      />
 
       <Card className="overflow-hidden">
         <CardContent className="overflow-x-auto p-0">

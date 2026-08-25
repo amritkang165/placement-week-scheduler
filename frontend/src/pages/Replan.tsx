@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Field, Input, Select } from "@/components/ui/input";
 import { Table, THead, TH, TR, TD } from "@/components/ui/table";
+import { SegmentedControl } from "@/components/ui/segmented";
 import { EmptyState, ErrorBox, Spinner } from "@/components/States";
 import { formatDate, minutesToTime } from "@/lib/utils";
 
@@ -120,7 +121,7 @@ export default function Replan() {
     <div className="space-y-6">
       <div>
         <p className="eyebrow mb-2">Handle the unexpected</p>
-        <h2 className="font-display text-3xl font-semibold tracking-tight">Disruptions</h2>
+        <h2 className="large-title">Disruptions</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           Inject a disruption and re-solve. Unaffected interviews keep their time slots.
         </p>
@@ -224,18 +225,14 @@ export default function Replan() {
           <Card>
             <CardHeader className="flex-row items-center justify-between">
               <CardTitle>Changes ({changes.length})</CardTitle>
-              <div className="flex gap-1">
-                {(["ALL", "MOVED", "CANCELLED", "ADDED"] as const).map((f) => (
-                  <Button
-                    key={f}
-                    size="sm"
-                    variant={filter === f ? "primary" : "outline"}
-                    onClick={() => setFilter(f)}
-                  >
-                    {f}
-                  </Button>
-                ))}
-              </div>
+              <SegmentedControl
+                value={filter}
+                onChange={setFilter}
+                options={(["ALL", "MOVED", "CANCELLED", "ADDED"] as const).map((f) => ({
+                  value: f,
+                  label: f,
+                }))}
+              />
             </CardHeader>
             <CardContent className="max-h-[480px] overflow-y-auto p-0">
               <THead>

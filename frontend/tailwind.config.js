@@ -5,7 +5,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Inter"', "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          '"SF Pro Text"',
+          '"Inter"',
+          '"Segoe UI"',
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+        ],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -21,13 +30,14 @@ export default {
       },
       borderColor: { DEFAULT: "hsl(var(--border))" },
       borderRadius: {
-        lg: "0.625rem",
+        lg: "0.75rem",
         md: "0.5rem",
         sm: "0.375rem",
+        xl: "1rem",
       },
       boxShadow: {
-        card: "0 1px 2px 0 rgb(0 0 0 / 0.04), 0 1px 3px 0 rgb(0 0 0 / 0.06)",
-        pop: "0 4px 12px -2px rgb(0 0 0 / 0.12)",
+        mac: "0 1px 2px rgb(0 0 0 / 0.05), 0 4px 16px -4px rgb(0 0 0 / 0.08)",
+        float: "0 8px 30px -6px rgb(0 0 0 / 0.16)",
       },
     },
   },

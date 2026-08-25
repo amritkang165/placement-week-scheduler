@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input, Select } from "@/components/ui/input";
 import { Table, THead, TH, TR, TD } from "@/components/ui/table";
+import { SegmentedControl } from "@/components/ui/segmented";
 import { ErrorBox, Spinner } from "@/components/States";
 import { cn } from "@/lib/utils";
 
@@ -65,7 +66,7 @@ export default function Entities() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="eyebrow mb-2">Who’s on the board</p>
-          <h2 className="font-display text-3xl font-semibold tracking-tight">Entities</h2>
+          <h2 className="large-title">Entities</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Companies, students, rooms, and panels in the current dataset
           </p>
@@ -78,20 +79,11 @@ export default function Entities() {
         />
       </div>
 
-      <div className="flex gap-1">
-        {TABS.map((t) => (
-          <button
-            key={t.key}
-            onClick={() => setTab(t.key)}
-            className={cn(
-              "rounded-md px-3 py-1.5 text-sm font-medium",
-              tab === t.key ? "bg-primary text-primary-foreground" : "bg-card text-foreground hover:bg-muted",
-            )}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
+      <SegmentedControl
+        value={tab}
+        onChange={setTab}
+        options={TABS.map((t) => ({ value: t.key as Tab, label: t.label }))}
+      />
 
       {tab === "companies" && (
         <Card>

@@ -88,7 +88,7 @@ export default function Analytics() {
     <div className="space-y-6">
       <div>
         <p className="eyebrow mb-2">Numbers &amp; utilization</p>
-        <h2 className="font-display text-3xl font-semibold tracking-tight">Analytics</h2>
+        <h2 className="large-title">Analytics</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           Utilization and throughput for the active schedule version
         </p>

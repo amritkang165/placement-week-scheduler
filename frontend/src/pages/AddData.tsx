@@ -14,6 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Field, Input, Select, Textarea } from "@/components/ui/input";
+import { SegmentedControl } from "@/components/ui/segmented";
 import { ErrorBox, Spinner } from "@/components/States";
 
 type EntityKind = "company" | "student" | "room" | "panel" | "shortlist";
@@ -126,7 +127,7 @@ export default function AddData() {
     <div className="space-y-4">
       <div>
         <p className="eyebrow mb-2">Bring your own</p>
-        <h2 className="font-display text-3xl font-semibold tracking-tight">Add data</h2>
+        <h2 className="large-title">Add data</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           Add companies, students, rooms, panels, and shortlists manually or import in bulk.
         </p>
@@ -146,27 +147,15 @@ export default function AddData() {
         </Button>
       </div>
 
-      <div className="flex gap-1">
-        {(
-          [
-            ["form", "Form", Plus],
-            ["json", "JSON", FileJson],
-            ["csv", "CSV", FileSpreadsheet],
-          ] as const
-        ).map(([key, label, Icon]) => (
-          <button
-            key={key}
-            onClick={() => setTab(key)}
-            className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium"
-            style={{
-              background: tab === key ? "hsl(var(--primary))" : "hsl(var(--card))",
-              color: tab === key ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground))",
-            }}
-          >
-            <Icon className="h-4 w-4" /> {label}
-          </button>
-        ))}
-      </div>
+      <SegmentedControl
+        value={tab}
+        onChange={setTab}
+        options={[
+          { value: "form" as const, label: "Form" },
+          { value: "json" as const, label: "JSON" },
+          { value: "csv" as const, label: "CSV" },
+        ]}
+      />
 
       <Card>
         {tab === "form" && (
