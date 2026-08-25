@@ -5,6 +5,7 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
+  LabelList,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -14,6 +15,7 @@ import {
 } from "recharts";
 import { api } from "@/lib/api";
 import type { Metrics, ScheduleVersion } from "@/lib/types";
+import { AXIS, ChartTooltip, PALETTE, TIER_COLORS } from "@/lib/charts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,12 +24,6 @@ import { EmptyState, ErrorBox, Spinner } from "@/components/States";
 import ConflictsWidget from "@/components/ConflictsWidget";
 import { Table, THead, TH, TR, TD } from "@/components/ui/table";
 import { pct } from "@/lib/utils";
-
-const TIER_COLORS: Record<string, string> = {
-  TIER_1: "#2b2b2b",
-  TIER_2: "#f6961e",
-  TIER_3: "#b9b3a6",
-};
 
 export default function Dashboard() {
   const [metrics, setMetrics] = useState<Metrics | null>(null);
@@ -73,6 +69,7 @@ export default function Dashboard() {
   const hasData = metrics && metrics.total > 0;
   const tierData = Object.entries(metrics?.interviews_by_tier ?? {}).map(([tier, count]) => ({
     name: tier.replace("TIER_", "Tier "),
+    tier,
     value: count,
   }));
   const dayData = Object.entries(metrics?.interviews_by_day ?? {})
@@ -151,19 +148,22 @@ export default function Dashboard() {
       <ConflictsWidget />
 
       {/* ── Charts ─────────────────────────────────────────── */}
-      <div className="grid gap-6 lg:grid-cols-2">
+      <section className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Interviews per day</CardTitle>
+            <p className="text-xs text-muted-foreground">Total · {metrics.scheduled.toLocaleString()}</p>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={240}>
-              <BarChart data={dayData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e6e0d6" />
-                <XAxis dataKey="day" fontSize={12} tickLine={false} axisLine={{ stroke: "#e6e0d6" }} />
-                <YAxis fontSize={12} allowDecimals={false} tickLine={false} axisLine={false} />
-                <Tooltip contentStyle={{ borderRadius: 8, borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }} />
-                <Bar dataKey="interviews" fill="#2b2b2b" />
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={dayData} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+                <CartesianGrid vertical={false} stroke={PALETTE.line} strokeDasharray="2 4" />
+                <XAxis dataKey="day" tick={AXIS.tick} tickLine={false} axisLine={{ stroke: PALETTE.line }} />
+                <YAxis tick={AXIS.tick} tickLine={false} axisLine={false} width={36} />
+                <Tooltip cursor={{ fill: "hsl(0 0% 0% / 0.04)" }} content={<ChartTooltip />} />
+                <Bar dataKey="interviews" name="Interviews" fill={PALETTE.saffron} radius={[3, 3, 0, 0]} maxBarSize={46}>
+                  <LabelList dataKey="interviews" position="top" style={{ fontSize: 11, fill: PALETTE.textMuted }} />
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -171,30 +171,48 @@ export default function Dashboard() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Scheduled by priority tier</CardTitle>
+            <CardTitle>By priority tier</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={200}>
-              <PieChart>
-                <Pie data={tierData} dataKey="value" nameKey="name" innerRadius={50} outerRadius={85} paddingAngle={2}>
-                  {tierData.map((entry) => (
-                    <Cell key={entry.name} fill={TIER_COLORS[entry.name.replace(" ", "_").toUpperCase()] ?? TIER_COLORS.TIER_3} />
-                  ))}
-                </Pie>
-                <Tooltip contentStyle={{ borderRadius: 8, borderColor: "hsl(var(--border))", background: "hsl(var(--card))" }} />
-              </PieChart>
-            </ResponsiveContainer>
-            <div className="mt-2 flex justify-center gap-4 text-xs text-muted-foreground">
-              {tierData.map((t) => (
-                <span key={t.name} className="flex items-center gap-1.5">
-                  <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: TIER_COLORS[t.name.replace(" ", "_").toUpperCase()] ?? TIER_COLORS.TIER_3 }} />
-                  {t.name}: {t.value}
-                </span>
-              ))}
+            <div className="flex items-center gap-6">
+              <div className="relative h-[180px] w-[180px] shrink-0">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={tierData}
+                      dataKey="value"
+                      nameKey="name"
+                      innerRadius={58}
+                      outerRadius={86}
+                      paddingAngle={2}
+                      stroke="hsl(var(--background))"
+                      strokeWidth={3}
+                    >
+                      {tierData.map((entry) => (
+                        <Cell key={entry.name} fill={TIER_COLORS[entry.tier] ?? PALETTE.muted} />
+                      ))}
+                    </Pie>
+                    <Tooltip content={<ChartTooltip />} />
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="font-mono text-xs text-muted-foreground">placed</span>
+                  <span className="display text-2xl">{metrics.scheduled}</span>
+                </div>
+              </div>
+              <ul className="flex-1 space-y-3">
+                {tierData.map((t) => (
+                  <li key={t.name} className="flex items-center gap-2 text-sm">
+                    <span className="h-2.5 w-2.5 rounded-full" style={{ background: TIER_COLORS[t.tier] ?? PALETTE.muted }} />
+                    <span className="text-muted-foreground">{t.name}</span>
+                    <span className="ml-auto font-mono font-medium">{t.value}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </CardContent>
         </Card>
-      </div>
+      </section>
 
       {/* ── Versions ───────────────────────────────────────── */}
       <Card>

@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { api } from "@/lib/api";
 import type { Company, Interview, Metrics } from "@/lib/types";
+import { AXIS, ChartTooltip, PALETTE } from "@/lib/charts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, THead, TH, TR, TD } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -101,28 +102,31 @@ export default function Analytics() {
         <StatCard label="Avg student wait" value={`${metrics.avg_wait_minutes.toFixed(0)} min`} sub="before first interview" />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Daily load &amp; room utilization</CardTitle>
+            <CardTitle>Daily load &amp; utilization</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={260}>
-              <BarChart data={perDay}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="day" fontSize={12} />
-                <YAxis yAxisId="left" fontSize={12} allowDecimals={false} />
+            <ResponsiveContainer width="100%" height={240}>
+              <BarChart data={perDay} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+                <CartesianGrid vertical={false} stroke={PALETTE.line} strokeDasharray="2 4" />
+                <XAxis dataKey="day" tick={AXIS.tick} tickLine={false} axisLine={{ stroke: PALETTE.line }} />
+                <YAxis yAxisId="left" tick={AXIS.tick} tickLine={false} axisLine={false} width={34} />
                 <YAxis
                   yAxisId="right"
                   orientation="right"
-                  fontSize={12}
+                  tick={AXIS.tick}
+                  tickLine={false}
+                  axisLine={false}
                   unit="%"
                   domain={[0, 100]}
+                  width={38}
                 />
-                <Tooltip />
-                <Legend />
-                <Bar yAxisId="left" dataKey="interviews" name="Interviews" fill="#2b2b2b" radius={[0, 0, 0, 0]} />
-                <Bar yAxisId="right" dataKey="utilization" name="Util %" fill="#f59e0b" radius={[0, 0, 0, 0]} />
+                <Tooltip cursor={{ fill: "hsl(0 0% 0% / 0.04)" }} content={<ChartTooltip />} />
+                <Legend wrapperStyle={{ fontSize: 11, color: PALETTE.textMuted }} />
+                <Bar yAxisId="left" dataKey="interviews" name="Interviews" fill={PALETTE.saffron} radius={[3, 3, 0, 0]} maxBarSize={40} />
+                <Bar yAxisId="right" dataKey="utilization" name="Utilisation" fill={PALETTE.ink} fillOpacity={0.12} radius={[3, 3, 0, 0]} maxBarSize={40} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -130,18 +134,18 @@ export default function Analytics() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Interviews by company</CardTitle>
+            <CardTitle>By company</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={260}>
-              <BarChart data={perCompany.slice(0, 12)} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-                <XAxis type="number" fontSize={12} allowDecimals={false} />
-                <YAxis type="category" dataKey="name" fontSize={11} width={130} />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="scheduled" name="Scheduled" stackId="a" fill="#2b2b2b" />
-                <Bar dataKey="cancelled" name="Cancelled" stackId="a" fill="#c9513b" />
+            <ResponsiveContainer width="100%" height={240}>
+              <BarChart data={perCompany.slice(0, 10)} layout="vertical" margin={{ top: 0, right: 12, left: 0, bottom: 0 }}>
+                <CartesianGrid horizontal={false} stroke={PALETTE.line} strokeDasharray="2 4" />
+                <XAxis type="number" tick={AXIS.tick} tickLine={false} axisLine={{ stroke: PALETTE.line }} />
+                <YAxis type="category" dataKey="name" tick={{ fontSize: 11, fill: PALETTE.textMuted }} width={120} tickLine={false} axisLine={false} />
+                <Tooltip cursor={{ fill: "hsl(0 0% 0% / 0.04)" }} content={<ChartTooltip />} />
+                <Legend wrapperStyle={{ fontSize: 11, color: PALETTE.textMuted }} />
+                <Bar dataKey="scheduled" name="Scheduled" stackId="a" fill={PALETTE.ink} maxBarSize={14} />
+                <Bar dataKey="cancelled" name="Cancelled" stackId="a" fill={PALETTE.saffron} maxBarSize={14} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
