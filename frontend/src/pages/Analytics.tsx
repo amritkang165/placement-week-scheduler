@@ -125,8 +125,8 @@ export default function Analytics() {
                 />
                 <Tooltip cursor={{ fill: "hsl(0 0% 0% / 0.04)" }} content={<ChartTooltip />} />
                 <Legend wrapperStyle={{ fontSize: 11, color: PALETTE.textMuted }} />
-                <Bar yAxisId="left" dataKey="interviews" name="Interviews" fill={PALETTE.saffron} radius={[3, 3, 0, 0]} maxBarSize={40} />
-                <Bar yAxisId="right" dataKey="utilization" name="Utilisation" fill={PALETTE.ink} fillOpacity={0.12} radius={[3, 3, 0, 0]} maxBarSize={40} />
+                <Bar yAxisId="left" dataKey="interviews" name="Interviews" fill={PALETTE.primary} radius={[3, 3, 0, 0]} maxBarSize={40} />
+                <Bar yAxisId="right" dataKey="utilization" name="Utilisation" fill={PALETTE.muted} fillOpacity={0.5} radius={[3, 3, 0, 0]} maxBarSize={40} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -144,8 +144,8 @@ export default function Analytics() {
                 <YAxis type="category" dataKey="name" tick={{ fontSize: 11, fill: PALETTE.textMuted }} width={120} tickLine={false} axisLine={false} />
                 <Tooltip cursor={{ fill: "hsl(0 0% 0% / 0.04)" }} content={<ChartTooltip />} />
                 <Legend wrapperStyle={{ fontSize: 11, color: PALETTE.textMuted }} />
-                <Bar dataKey="scheduled" name="Scheduled" stackId="a" fill={PALETTE.ink} maxBarSize={14} />
-                <Bar dataKey="cancelled" name="Cancelled" stackId="a" fill={PALETTE.saffron} maxBarSize={14} />
+                <Bar dataKey="scheduled" name="Scheduled" stackId="a" fill={PALETTE.primary} maxBarSize={14} />
+                <Bar dataKey="cancelled" name="Cancelled" stackId="a" fill={PALETTE.primary} maxBarSize={14} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>

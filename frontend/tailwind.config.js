@@ -6,8 +6,6 @@ export default {
     extend: {
       fontFamily: {
         sans: ['"Inter"', "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ['"Fraunces"', "ui-serif", "Georgia", "serif"],
-        mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -22,8 +20,15 @@ export default {
         card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
       },
       borderColor: { DEFAULT: "hsl(var(--border))" },
-      borderRadius: { lg: "0", md: "0", sm: "0", xl: "0" },
-      boxShadow: { none: "none" },
+      borderRadius: {
+        lg: "0.75rem",
+        md: "0.5rem",
+        sm: "0.375rem",
+      },
+      boxShadow: {
+        glow: "0 0 0 1px hsl(var(--primary) / 0.1), 0 8px 24px -8px hsl(var(--primary) / 0.25)",
+        card: "0 1px 2px rgb(0 0 0 / 0.2)",
+      },
     },
   },
   plugins: [],

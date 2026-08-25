@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 const VARIANTS = {
   primary: "bg-primary text-primary-foreground hover:bg-primary/90",
   accent: "bg-accent text-accent-foreground hover:bg-accent/90",
-  outline: "border border-foreground/25 bg-transparent text-foreground hover:border-foreground hover:bg-muted",
+  outline: "border border-border bg-transparent text-foreground hover:bg-muted",
   ghost: "text-foreground hover:bg-muted",
   destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
 };
@@ -29,7 +29,7 @@ export function Button({
   asChild?: boolean;
 }) {
   const classes = cn(
-    "inline-flex select-none items-center justify-center gap-1.5 rounded-none font-medium tracking-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 disabled:pointer-events-none disabled:opacity-50",
+    "inline-flex select-none items-center justify-center gap-1.5 rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
     VARIANTS[variant],
     SIZES[size],
     className,

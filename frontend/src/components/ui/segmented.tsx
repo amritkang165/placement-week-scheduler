@@ -13,16 +13,16 @@ export function SegmentedControl<T extends string>({
   className?: string;
 }) {
   return (
-    <div className={cn("flex items-center gap-5 overflow-x-auto", className)}>
+    <div className={cn("inline-flex items-center rounded-lg bg-muted/70 p-1", className)}>
       {options.map((o) => (
         <button
           key={o.value}
           onClick={() => onChange(o.value)}
           className={cn(
-            "whitespace-nowrap border-b pb-1 font-mono text-[11px] font-medium uppercase tracking-[0.14em] transition-colors",
+            "whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all",
             value === o.value
-              ? "border-accent text-foreground"
-              : "border-transparent text-muted-foreground hover:text-foreground",
+              ? "bg-card text-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground",
           )}
         >
           {o.label ?? o.value}

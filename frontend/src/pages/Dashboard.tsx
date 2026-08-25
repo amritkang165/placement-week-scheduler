@@ -78,14 +78,14 @@ export default function Dashboard() {
 
   if (!hasData) {
     return (
-      <div className="mx-auto max-w-xl py-16 text-center">
-        <p className="eyebrow mb-5">Coordinators’ board</p>
-        <h2 className="display text-5xl md:text-6xl">Bring the board to life.</h2>
-        <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">
+      <div className="glass mx-auto max-w-xl px-8 py-16 text-center">
+        <p className="eyebrow mb-4">Coordinators’ board</p>
+        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Bring the board to life.</h2>
+        <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
           Generate a deterministic dataset and solve the initial schedule to
           stage placement week.
         </p>
-        <Button size="lg" className="mt-9" onClick={seedAndSchedule} disabled={busy}>
+        <Button size="lg" className="mt-8" onClick={seedAndSchedule} disabled={busy}>
           {busy ? "Solving…" : "Generate & schedule"}
         </Button>
       </div>
@@ -93,40 +93,39 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-12">
       {/* ── Hero ───────────────────────────────────────────── */}
-      <section className="grid gap-10 lg:grid-cols-[1.3fr_0.9fr]">
-        <div>
-          <p className="eyebrow mb-5">Placement week · Coordinators’ board</p>
-          <h1 className="display text-6xl md:text-7xl">
-            The board is{" "}
-            <span className="underline decoration-accent decoration-4 underline-offset-8">
-              full
-            </span>
-            .
-          </h1>
-          <p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">
-            <span className="font-semibold text-foreground">{metrics.scheduled}</span> of{" "}
-            {metrics.total} shortlists placed — {pct(metrics.coverage)}.{" "}
-            {metrics.student_clashes === 0
-              ? "No clashes. Every appointment runs clean."
-              : `${metrics.student_clashes} clashes need attention.`}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Button asChild>
-              <Link to="/schedule">Open schedule</Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link to="/replan">Handle a disruption</Link>
-            </Button>
+      <section className="glass px-8 py-8">
+        <div className="grid gap-8 lg:grid-cols-[1.3fr_0.9fr]">
+          <div>
+            <p className="eyebrow mb-4">Placement week · Coordinators’ board</p>
+            <h1 className="text-4xl font-semibold leading-[1.1] tracking-tight md:text-5xl">
+              The board is{" "}
+              <span className="text-primary">full</span>.
+            </h1>
+            <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">
+              <span className="font-semibold text-foreground">{metrics.scheduled}</span> of{" "}
+              {metrics.total} shortlists placed — {pct(metrics.coverage)}.{" "}
+              {metrics.student_clashes === 0
+                ? "No clashes. Every appointment runs clean."
+                : `${metrics.student_clashes} clashes need attention.`}
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Button asChild>
+                <Link to="/schedule">Open schedule</Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link to="/replan">Handle a disruption</Link>
+              </Button>
+            </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-x-10 gap-y-8">
-          <StatCard label="Coverage" value={pct(metrics.coverage)} sub="scheduled shortlists" />
-          <StatCard label="Unscheduled" value={metrics.unscheduled} sub="no feasible slot yet" />
-          <StatCard label="Replan churn" value={pct(metrics.replan_churn)} sub="moved + cancelled" />
-          <StatCard label="Average wait" value={`${metrics.avg_wait_minutes.toFixed(0)}m`} sub="between interviews" />
+          <div className="grid grid-cols-2 gap-3">
+            <StatCard label="Coverage" value={pct(metrics.coverage)} sub="scheduled shortlists" />
+            <StatCard label="Unscheduled" value={metrics.unscheduled} sub="no feasible slot yet" />
+            <StatCard label="Replan churn" value={pct(metrics.replan_churn)} sub="moved + cancelled" />
+            <StatCard label="Average wait" value={`${metrics.avg_wait_minutes.toFixed(0)}m`} sub="between interviews" />
+          </div>
         </div>
       </section>
 
@@ -161,7 +160,7 @@ export default function Dashboard() {
                 <XAxis dataKey="day" tick={AXIS.tick} tickLine={false} axisLine={{ stroke: PALETTE.line }} />
                 <YAxis tick={AXIS.tick} tickLine={false} axisLine={false} width={36} />
                 <Tooltip cursor={{ fill: "hsl(0 0% 0% / 0.04)" }} content={<ChartTooltip />} />
-                <Bar dataKey="interviews" name="Interviews" fill={PALETTE.saffron} radius={[3, 3, 0, 0]} maxBarSize={46}>
+                <Bar dataKey="interviews" name="Interviews" fill={PALETTE.primary} radius={[3, 3, 0, 0]} maxBarSize={46}>
                   <LabelList dataKey="interviews" position="top" style={{ fontSize: 11, fill: PALETTE.textMuted }} />
                 </Bar>
               </BarChart>
