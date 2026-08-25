@@ -50,6 +50,7 @@
     @apply bg-background text-foreground antialiased;
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: "cv02", "cv03";
+    font-size: 15px;
   }
   ::selection {
     background: hsl(var(--accent) / 0.28);
@@ -61,7 +62,7 @@
     @apply font-mono text-[10px] font-medium uppercase tracking-[0.28em] text-muted-foreground;
   }
   .display {
-    @apply font-display font-medium leading-[1.02] tracking-[-0.02em];
+    @apply font-display font-medium leading-[1.05] tracking-[-0.02em];
   }
   .large-title {
     @apply display text-3xl md:text-4xl;
@@ -71,5 +72,8 @@
   }
   .label-mono {
     @apply font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground;
+  }
+  .heading {
+    @apply display text-xl;
   }
 }

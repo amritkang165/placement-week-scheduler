@@ -3,9 +3,9 @@ import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 const VARIANTS = {
-  primary: "bg-primary text-primary-foreground hover:bg-primary/85",
+  primary: "bg-primary text-primary-foreground hover:bg-primary/90",
   accent: "bg-accent text-accent-foreground hover:bg-accent/90",
-  outline: "border border-border bg-transparent text-foreground hover:bg-muted",
+  outline: "border border-foreground/25 bg-transparent text-foreground hover:border-foreground hover:bg-muted",
   ghost: "text-foreground hover:bg-muted",
   destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
 };

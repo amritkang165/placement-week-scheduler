@@ -35,8 +35,10 @@ export default function App() {
                 end={end}
                 className={({ isActive }) =>
                   cn(
-                    "label-mono transition-colors",
-                    isActive ? "text-foreground underline underline-offset-8 decoration-accent decoration-2" : "hover:text-foreground",
+                    "rounded-sm px-3 py-1.5 font-mono text-[11px] font-medium uppercase tracking-[0.18em] transition-colors",
+                    isActive
+                      ? "bg-foreground text-background"
+                      : "text-muted-foreground hover:text-foreground",
                   )
                 }
               >
