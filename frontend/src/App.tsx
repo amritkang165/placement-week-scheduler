@@ -32,15 +32,15 @@ export default function App() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* ── Top bar ─────────────────────────────────────────── */}
-      <header className="sticky top-0 z-30 border-b-2 border-foreground bg-background/95 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
           <div className="flex items-center gap-3">
-            <span className="flex h-9 items-center border-2 border-foreground bg-accent px-2 font-display text-lg leading-none text-accent-foreground shadow-hard-sm">
+            <span className="flex h-8 items-center rounded-md bg-primary px-2.5 text-sm font-bold text-primary-foreground">
               PW
             </span>
             <div className="leading-tight">
-              <p className="font-display text-lg uppercase leading-none">Placement Week</p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+              <p className="text-[15px] font-semibold tracking-tight">Placement Week</p>
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
                 Coordinators’ board
               </p>
             </div>
@@ -49,22 +49,22 @@ export default function App() {
             <button
               onClick={toggle}
               aria-label="Toggle theme"
-              className="flex h-10 w-10 items-center justify-center border-2 border-foreground bg-card shadow-hard-sm transition-transform hover:-translate-y-0.5"
+              className="flex h-8 w-8 items-center justify-center rounded-md border border-border text-foreground hover:bg-muted"
             >
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
             <button
               aria-label="Notifications"
-              className="relative flex h-10 w-10 items-center justify-center border-2 border-foreground bg-card shadow-hard-sm transition-transform hover:-translate-y-0.5"
+              className="relative flex h-8 w-8 items-center justify-center rounded-md border border-border text-foreground hover:bg-muted"
             >
               <Bell className="h-4 w-4" />
-              <span className="absolute right-1 top-1 h-2 w-2 border border-foreground bg-destructive" />
+              <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-destructive" />
             </button>
           </div>
         </div>
         {/* nav */}
         <nav className="mx-auto max-w-6xl overflow-x-auto px-5">
-          <div className="flex gap-2 py-2">
+          <div className="flex gap-1">
             {NAV.map(({ to, label, icon: Icon }) => (
               <NavLink
                 key={to}
@@ -72,10 +72,8 @@ export default function App() {
                 end={to === "/"}
                 className={({ isActive }) =>
                   cn(
-                    "flex items-center gap-2 whitespace-nowrap border-2 border-foreground px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-wide transition-all",
-                    isActive
-                      ? "bg-foreground text-background shadow-hard-sm"
-                      : "bg-card text-foreground hover:-translate-y-0.5 hover:bg-accent hover:text-accent-foreground",
+                    "flex items-center gap-2 whitespace-nowrap border-b-2 px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
+                    isActive ? "border-primary text-foreground" : "border-transparent",
                   )
                 }
               >
@@ -98,8 +96,8 @@ export default function App() {
         </Routes>
       </main>
 
-      <footer className="mx-auto max-w-6xl border-t-2 border-foreground px-5 py-6 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-        CP-SAT · FastAPI · React — all systems go
+      <footer className="mx-auto max-w-6xl px-5 pb-10 text-xs text-muted-foreground">
+        CP-SAT · FastAPI · React
       </footer>
     </div>
   );

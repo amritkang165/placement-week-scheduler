@@ -5,9 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Space Grotesk"', "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ['"Archivo Black"', "ui-sans-serif", "sans-serif"],
-        mono: ['"Space Mono"', "ui-monospace", "monospace"],
+        sans: ['"Inter"', "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -21,13 +19,15 @@ export default {
         destructive: { DEFAULT: "hsl(var(--destructive))", foreground: "hsl(var(--destructive-foreground))" },
         card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
       },
-      borderWidth: { 2: "2px", 3: "3px", DEFAULT: "2px" },
       borderColor: { DEFAULT: "hsl(var(--border))" },
-      borderRadius: { none: "0", sm: "0", md: "0", lg: "0", xl: "0" },
+      borderRadius: {
+        lg: "0.625rem",
+        md: "0.5rem",
+        sm: "0.375rem",
+      },
       boxShadow: {
-        hard: "var(--hard-shadow)",
-        "hard-sm": "4px 4px 0 0 hsl(0 0% 7%)",
-        "hard-accent": "5px 5px 0 0 hsl(var(--accent))",
+        card: "0 1px 2px 0 rgb(0 0 0 / 0.04), 0 1px 3px 0 rgb(0 0 0 / 0.06)",
+        pop: "0 4px 12px -2px rgb(0 0 0 / 0.12)",
       },
     },
   },

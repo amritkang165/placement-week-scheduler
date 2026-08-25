@@ -16,11 +16,11 @@ const DAY_END = 17 * 60;
 function tierColor(tier: string | undefined): string {
   switch (tier) {
     case "TIER_1":
-      return "bg-primary text-primary-foreground border-foreground";
+      return "bg-primary/10 text-primary border-primary/20";
     case "TIER_2":
-      return "bg-accent text-accent-foreground border-foreground";
+      return "bg-accent/10 text-accent border-accent/20";
     default:
-      return "bg-muted text-foreground border-foreground";
+      return "bg-muted text-muted-foreground border-border";
   }
 }
 
