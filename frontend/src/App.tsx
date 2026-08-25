@@ -90,10 +90,6 @@ export default function App() {
               <Route path="/add-data" element={<AddData />} />
             </Routes>
           </main>
-
-          <footer className="mx-auto max-w-6xl border-t border-border/60 px-6 py-8">
-            <p className="text-xs text-muted-foreground">CP-SAT · FastAPI · React</p>
-          </footer>
         </div>
       </div>
     </div>
