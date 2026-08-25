@@ -71,4 +71,18 @@
       radial-gradient(60% 50% at 50% -10%, hsl(var(--primary) / 0.18), transparent 70%),
       radial-gradient(50% 40% at 100% 0%, hsl(var(--accent) / 0.08), transparent 60%);
   }
+  .dot-grid {
+    background-image: radial-gradient(hsl(var(--muted-foreground) / 0.18) 1px, transparent 1px);
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(70% 60% at 50% 0%, black, transparent);
+    mask-image: radial-gradient(70% 60% at 50% 0%, black, transparent);
+  }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  animation: fadeUp 0.35s ease both;
 }

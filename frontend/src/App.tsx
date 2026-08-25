@@ -68,8 +68,9 @@ export default function App() {
       </aside>
 
       {/* ── Main ────────────────────────────────────────────── */}
-      <div className="flex-1 overflow-x-hidden">
-        <div className="glow min-h-screen">
+      <div className="relative flex-1 overflow-x-hidden">
+        <div className="dot-grid pointer-events-none absolute inset-x-0 top-0 h-64" />
+        <div className="glow relative min-h-screen">
           <header className="sticky top-0 z-30 border-b border-border/60 bg-background/70 backdrop-blur-xl">
             <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
               <div className="flex items-baseline gap-3">
@@ -79,7 +80,7 @@ export default function App() {
             </div>
           </header>
 
-          <main className="mx-auto max-w-6xl px-6 py-10 md:py-12">
+          <main className="fade-in mx-auto max-w-6xl px-6 py-10 md:py-12">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/schedule" element={<Schedule />} />

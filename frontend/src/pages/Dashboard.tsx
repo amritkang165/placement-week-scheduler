@@ -98,7 +98,13 @@ export default function Dashboard() {
       <section className="glass px-8 py-8">
         <div className="grid gap-8 lg:grid-cols-[1.3fr_0.9fr]">
           <div>
-            <p className="eyebrow mb-4">Placement week · Coordinators’ board</p>
+            <div className="mb-4 flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
+              </span>
+              <span className="eyebrow">Live board · Week {metrics.companies} companies</span>
+            </div>
             <h1 className="text-4xl font-semibold leading-[1.1] tracking-tight md:text-5xl">
               The board is{" "}
               <span className="text-primary">full</span>.
