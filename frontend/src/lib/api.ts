@@ -13,7 +13,9 @@ import type {
   Student,
 } from "./types";
 
-const BASE = "/api";
+// API base URL. Use VITE_API_URL for hosted deployments (e.g. Render);
+// defaults to "/api" so the Vite dev proxy works locally.
+const BASE: string = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") ?? "/api";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
