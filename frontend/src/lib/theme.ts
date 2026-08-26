@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 const STORAGE_KEY = "pws-theme";
 
 function initialTheme(): "light" | "dark" {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "light";
   const stored = localStorage.getItem(STORAGE_KEY);
   if (stored === "light" || stored === "dark") return stored;
-  return "dark";
+  return "light";
 }
 
 export function useTheme() {

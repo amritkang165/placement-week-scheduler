@@ -1,12 +1,13 @@
 import type { ReactNode } from "react";
 
 export const PALETTE = {
-  primary: "#7c86f7",
-  muted: "#5b5e66",
-  negative: "#f26d6d",
-  positive: "#63d3a6",
-  line: "#23242b",
-  textMuted: "#8a8c93",
+  primary: "#e0662a",
+  accent: "#d97706",
+  muted: "#b9b1a5",
+  negative: "#e5484d",
+  positive: "#2f9e6e",
+  line: "#e6dfd5",
+  textMuted: "#8a8377",
 };
 
 export const TIER_COLORS: Record<string, string> = {
