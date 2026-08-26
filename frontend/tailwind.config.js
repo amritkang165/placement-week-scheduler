@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Space Grotesk"', '"Geist"', '"Inter"', "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ['"Manrope"', '"Space Grotesk"', '"Geist"', '"Inter"', "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
