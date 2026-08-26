@@ -1,0 +1,43 @@
+# Render Blueprint — deploys the whole app in one click.
+# Docs: https://render.com/docs/blueprint-spec
+databases:
+  - name: placement-week-db
+    plan: free
+    ipAllowList: []
+
+services:
+  # ── Backend (FastAPI + CP-SAT) ────────────────────────────
+  - type: web
+    name: placement-week-api
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: placement-week-db
+          property: connectionString
+      - key: SOLVER_TIME_LIMIT_SECONDS
+        value: "30"
+      - key: SOLVER_WORKERS
+        value: "2"
+      - key: CORS_ORIGINS
+        value: https://placement-week-ui.onrender.com
+
+  # ── Frontend (React build, served statically) ─────────────
+  - type: web
+    name: placement-week-ui
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: VITE_API_URL
+        value: https://placement-week-api.onrender.com
