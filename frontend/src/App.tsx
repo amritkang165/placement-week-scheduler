@@ -33,8 +33,8 @@ export default function App() {
     <div className="flex min-h-screen bg-background text-foreground">
       {/* ── Left rail ───────────────────────────────────────── */}
       <aside className="sticky top-0 flex h-screen w-16 shrink-0 flex-col items-center border-r border-border/60 bg-card/30 py-4 backdrop-blur">
-        <div className="mb-6 flex h-9 w-9 items-center justify-center rounded-lg bg-primary/90 text-sm font-bold tracking-tight text-primary-foreground shadow-glow">
-          PW
+        <div className="mb-6 flex h-9 w-9 items-center justify-center rounded-lg bg-primary/90 text-primary-foreground shadow-glow">
+          <CalendarDays className="h-4 w-4" strokeWidth={2} />
         </div>
         <nav className="flex flex-col gap-1">
           {NAV.map(({ to, label, icon: Icon, end }) => (
