@@ -33,7 +33,7 @@ export default function App() {
     <div className="flex min-h-screen bg-background text-foreground">
       {/* ── Left rail ───────────────────────────────────────── */}
       <aside className="sticky top-0 flex h-screen w-16 shrink-0 flex-col items-center border-r border-border/60 bg-card/30 py-4 backdrop-blur">
-        <div className="mb-6 flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground shadow-glow">
+        <div className="mb-6 flex h-9 w-9 items-center justify-center rounded-lg bg-primary/90 text-sm font-bold tracking-tight text-primary-foreground shadow-glow">
           PW
         </div>
         <nav className="flex flex-col gap-1">
@@ -75,7 +75,7 @@ export default function App() {
             <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
               <div className="flex items-baseline gap-3">
                 <span className="text-[15px] font-semibold tracking-tight">Placement Week</span>
-                <span className="hidden text-xs text-muted-foreground sm:inline">Coordinators’ board</span>
+                <span className="hidden text-xs text-muted-foreground/70 sm:inline">Coordinators’ board</span>
               </div>
             </div>
           </header>

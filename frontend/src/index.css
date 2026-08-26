@@ -50,6 +50,7 @@
     @apply bg-background text-foreground antialiased;
     font-family: "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    letter-spacing: -0.011em;
   }
   ::selection {
     background: hsl(var(--primary) / 0.4);
@@ -68,11 +69,11 @@
   }
   .glow {
     background:
-      radial-gradient(60% 50% at 50% -10%, hsl(var(--primary) / 0.18), transparent 70%),
-      radial-gradient(50% 40% at 100% 0%, hsl(var(--accent) / 0.08), transparent 60%);
+      radial-gradient(55% 45% at 50% -8%, hsl(var(--primary) / 0.16), transparent 70%),
+      radial-gradient(45% 40% at 100% 0%, hsl(var(--accent) / 0.07), transparent 60%);
   }
   .dot-grid {
-    background-image: radial-gradient(hsl(var(--muted-foreground) / 0.18) 1px, transparent 1px);
+    background-image: radial-gradient(hsl(var(--muted-foreground) / 0.16) 1px, transparent 1px);
     background-size: 22px 22px;
     -webkit-mask-image: radial-gradient(70% 60% at 50% 0%, black, transparent);
     mask-image: radial-gradient(70% 60% at 50% 0%, black, transparent);

@@ -26,8 +26,9 @@ export default {
         sm: "0.375rem",
       },
       boxShadow: {
-        glow: "0 0 0 1px hsl(var(--primary) / 0.1), 0 8px 24px -8px hsl(var(--primary) / 0.25)",
-        card: "0 1px 2px rgb(0 0 0 / 0.2)",
+        glow: "0 0 0 1px hsl(var(--primary) / 0.1), 0 10px 30px -10px hsl(var(--primary) / 0.25)",
+        card: "0 1px 2px rgb(0 0 0 / 0.18), 0 4px 12px -4px rgb(0 0 0 / 0.12)",
+        float: "0 8px 28px -8px rgb(0 0 0 / 0.35)",
       },
     },
   },
