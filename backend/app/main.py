@@ -10,8 +10,11 @@ from fastapi.responses import JSONResponse
 
 from app.api import companies, data, disruptions, panels, rooms, schedule, students
 from app.config import settings
-from app.db.database import engine
+from app.db.database import SessionLocal, engine
+from app.db.seed import seed_database
+from app.models import Company
 from app.models.base import Base
+from app.services import scheduling_service
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("placement-scheduler")
@@ -22,6 +25,18 @@ async def lifespan(app: FastAPI):
     # Convenience for local/dev: create tables if they do not exist.
     # Production deployments use Alembic migrations (see README).
     Base.metadata.create_all(bind=engine)
+
+    # First boot on an empty database: seed a deterministic dataset and solve
+    # the initial schedule so a fresh deployment is usable out of the box.
+    db = SessionLocal()
+    try:
+        if db.query(Company).count() == 0:
+            logger.info("Empty database — generating demo data and initial schedule.")
+            seed_database(db, seed=42, force=True)
+            scheduling_service.generate_schedule(db, "Initial schedule")
+    finally:
+        db.close()
+
     yield
 
 
