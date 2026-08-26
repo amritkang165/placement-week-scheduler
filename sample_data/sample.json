@@ -1,0 +1,26 @@
+{
+  "companies": [
+    { "id": "COMP-01", "name": "Nova Systems", "priority_tier": "TIER_1", "cgpa_cutoff": 7.5, "interview_duration_minutes": 30, "panel_count": 2, "available_days": ["DAY_1", "DAY_2"] },
+    { "id": "COMP-02", "name": "Ridge Analytics", "priority_tier": "TIER_2", "cgpa_cutoff": 6.5, "interview_duration_minutes": 30, "panel_count": 1, "available_days": ["DAY_2", "DAY_3"] },
+    { "id": "COMP-03", "name": "Arcadia Labs", "priority_tier": "TIER_3", "cgpa_cutoff": 5.5, "interview_duration_minutes": 45, "panel_count": 1, "available_days": ["DAY_3", "DAY_4"] }
+  ],
+  "students": [
+    { "id": "STU-0001", "name": "Aarav Mehta", "cgpa": 8.6, "branch": "CSE", "year": 4 },
+    { "id": "STU-0002", "name": "Priya Nair", "cgpa": 7.9, "branch": "ECE", "year": 4 },
+    { "id": "STU-0003", "name": "Rohan Gupta", "cgpa": 6.8, "branch": "ME", "year": 4 },
+    { "id": "STU-0004", "name": "Sana Shaikh", "cgpa": 7.2, "branch": "CSE", "year": 4 },
+    { "id": "STU-0005", "name": "Karan Bedi", "cgpa": 5.9, "branch": "EEE", "year": 3 }
+  ],
+  "rooms": [
+    { "id": "ROOM-01", "name": "Auditorium A", "capacity": 8 },
+    { "id": "ROOM-02", "name": "Seminar Hall 2", "capacity": 6 }
+  ],
+  "shortlists": [
+    { "id": "SL-00001", "student_id": "STU-0001", "company_id": "COMP-01" },
+    { "id": "SL-00002", "student_id": "STU-0001", "company_id": "COMP-02" },
+    { "id": "SL-00003", "student_id": "STU-0002", "company_id": "COMP-01" },
+    { "id": "SL-00004", "student_id": "STU-0003", "company_id": "COMP-03" },
+    { "id": "SL-00005", "student_id": "STU-0004", "company_id": "COMP-02" },
+    { "id": "SL-00006", "student_id": "STU-0005", "company_id": "COMP-03" }
+  ]
+}
